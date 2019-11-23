@@ -1,0 +1,10 @@
+  <mat-drawer mode="side" opened class="sidebar shadow p-3 mb-5 bg-white rounded">
+        GYM
+
+    <mat-selection-list *ngFor="let menuItem of menuItems" class="menu">
+      <a class="nav-link" [routerLink]="[menuItem.path]">
+        <i class="material-icons">{{menuItem.icon}}</i>
+        {{menuItem.title}}
+      </a>
+    </mat-selection-list>
+  </mat-drawer>
