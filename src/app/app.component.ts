@@ -9,8 +9,8 @@ export class AppComponent {
   title = 'gym';
   menuItems = [
     { path: '/dashboard', title: 'Dashboard', icon: 'dashboard', class: '' },
-    { path: '/user-profile', title: 'User Profile', icon: 'person', class: '' },
-    { path: '/table-list', title: 'Table List', icon: 'content_paste', class: '' },
+    { path: '/clients', title: 'Mes clients', icon: 'person', class: '' },
+    { path: '/finances', title: 'Finance', icon: 'content_paste', class: '' },
     { path: '/typography', title: 'Typography', icon: 'library_books', class: '' },
     { path: '/icons', title: 'Icons', icon: 'bubble_chart', class: '' },
     { path: '/maps', title: 'Maps', icon: 'location_on', class: '' },

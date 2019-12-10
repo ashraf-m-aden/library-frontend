@@ -11,6 +11,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatCardModule } from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -20,9 +22,9 @@ import {MatSelectModule} from '@angular/material/select';
   ],
   exports: [MatSidenavModule, MatIconModule,
     BrowserAnimationsModule, MatMenuModule,
-    MatMenuModule, MatButtonModule,
+    MatMenuModule, MatButtonModule, MatPaginatorModule,
     MatToolbarModule, MatListModule,
-    MatDividerModule,
+    MatDividerModule, MatInputModule,
     MatCardModule, MatTableModule, MatSelectModule
   ]
 })
