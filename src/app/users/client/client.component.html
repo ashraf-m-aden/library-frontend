@@ -7,71 +7,69 @@
         </a>
       </div>
       <div class="card-body">
-        <h6 class="card-category text-gray">CEO / Co-Founder</h6>
-        <h4 class="card-title">Alec Thompson</h4>
-        <p class="card-description">
-          Don't be scared of the truth because we need to restart the human foundation in truth And I love you like
-          Kanye loves Kanye I love Rick Owens’ bed design but the back is...
-        </p>
-        <a href="javascript:void(0)" class="btn btn-danger btn-round" routerLink="/singleNotif" >Envoyer une notification</a>
+        <h6 class="card-category text-gray">CDC Q6</h6>
+        <h4 class="card-title">Ahmed Houssein</h4>
+        <h6 class="card-body">Date de naissance: 1/1/2001</h6>
+        <h6 class="card-body">Sexe: Masculin</h6>
+        <h6 class="card-body">Addresse: Q6 rue 123</h6>
+        <h6 class="card-body">Numero: 88888888</h6>
+
+        <a href="javascript:void(0)" class="btn btn-danger btn-round" routerLink="/singleNotif">Envoyer une
+          notification</a>
       </div>
     </div>
   </div>
   <div class="col-lg-8 col-md-12">
-    <mat-toolbar>
-      Performance
-    </mat-toolbar>
-    
+    <div class="row">
+      <div class="col-sm-12">
+        <mat-toolbar>
+          Livres lus
+        </mat-toolbar>
+      </div>
+      <div class="col-sm-12">
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+        </mat-paginator>
+        <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8" style="width: 100%;">
+          <ng-container matColumnDef="ID">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+            <td mat-cell *matCellDef="let element"> {{element.ID}} </td>
+          </ng-container>
 
-    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
-      (page)="pageEvent = $event">
-    </mat-paginator>
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Nom du livre </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
 
-    <div *ngIf="pageEvent">
-      <h5>Page Change Event Properties</h5>
-      <div>List length: {{pageEvent.length}}</div>
-      <div>Page size: {{pageEvent.pageSize}}</div>
-      <div>Page index: {{pageEvent.pageIndex}}</div>
+          <ng-container matColumnDef="DD">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date d'empreint </th>
+            <td mat-cell *matCellDef="let element"> {{element.DD}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="DR">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date de retour </th>
+            <td mat-cell *matCellDef="let element"> {{element.DR}} </td>
+          </ng-container>
+          <ng-container matColumnDef="Agent">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Reprit par</th>
+            <td mat-cell *matCellDef="let element"> {{element.Agent}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
     </div>
-    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-        <!--- Note that these columns can be defined in any order.
-              The actual rendered columns are set as a property on the row definition" -->
-      
-        <!-- Position Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef> No. </th>
-          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-        </ng-container>
-      
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef> Name </th>
-          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-        </ng-container>
-      
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-          <th mat-header-cell *matHeaderCellDef> Weight </th>
-          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-        </ng-container>
-      
-        <!-- Symbol Column -->
-        <ng-container matColumnDef="symbol">
-          <th mat-header-cell *matHeaderCellDef> Symbol </th>
-          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
-      
-      
-
+    <!-- Angular 8 pagination -->
   </div>
 </div>
 <div class="row">
-  <div class="col-12 test">
-    <mat-card-header> PAIEMENTS</mat-card-header>
+  <div class="col-sm-12">
+    <div style="display: block">
+      <canvas baseChart
+              [data]="pieChartData"
+              [labels]="pieChartLabels"
+              [chartType]="pieChartType"></canvas>
+    </div>
   </div>
 </div>

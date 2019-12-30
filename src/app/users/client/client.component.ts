@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 export interface PeriodicElement {
   name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  ID: number;
+  DD: number;
+  DR: string;
 }
 @Component({
   selector: 'app-client',
@@ -12,23 +13,29 @@ export interface PeriodicElement {
   styleUrls: ['./client.component.scss']
 })
 export class ClientComponent implements OnInit {
-  length = 100;
-  pageSize = 10;
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
-  ELEMENT_DATA: PeriodicElement[] = [
-    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  public pieChartLabels = ['Journal', 'Roman', 'Conte', 'Bande dessinée'];
+  public pieChartData = [10, 4, 8, 9];
+  public pieChartType = 'pie';
+
+  displayedColumns: string[] = ['ID', 'name', 'DD', 'DR', 'Agent'];
+  ELEMENT_DATA = [
+    { ID: 1, name: 'Hydrogen', DD: 1.0079, DR: 'H', Agent: 'Ashraf' },
+    { ID: 2, name: 'Helium', DD: 4.0026, DR: 'He', Agent: 'Ashraf' },
+    { ID: 3, name: 'Lithium', DD: 6.941, DR: 'Li', Agent: 'Ashraf' },
+    { ID: 4, name: 'Beryllium', DD: 9.0122, DR: 'Be', Agent: 'Ashraf' },
+    { ID: 5, name: 'Boron', DD: 10.811, DR: 'B', Agent: 'Ashraf' },
+    { ID: 6, name: 'Carbon', DD: 12.0107, DR: 'C', Agent: 'Ashraf' },
+    { ID: 7, name: 'Nitrogen', DD: 14.0067, DR: 'N', Agent: 'Ashraf' },
+    { ID: 8, name: 'Oxygen', DD: 15.9994, DR: 'O', Agent: 'Ashraf' },
+    { ID: 9, name: 'Fluorine', DD: 18.9984, DR: 'F', Agent: 'Ashraf' },
+    { ID: 10, name: 'Neon', DD: 20.1797, DR: 'Ne', Agent: 'Ashraf' },
   ];
-  dataSource = this.ELEMENT_DATA;
+  length = this.ELEMENT_DATA.length;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10];
+  dataSource = new MatTableDataSource(this.ELEMENT_DATA); // nescessaire
 
   // MatPaginator Output
   pageEvent: PageEvent;
@@ -40,6 +47,13 @@ export class ClientComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    // this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
   }
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
 
+  }
 }

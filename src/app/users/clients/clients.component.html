@@ -1,98 +1,59 @@
   <div class="row">
-    <div class="col-md-6 col-sm-12">
-
-      <table>
-        <tbody>
-          <tr>
-            <td>
-              <button class="btn btn-outline-success " routerLink="/addUser"> Ajouter un client</button>
-            </td>
-            <td>
-              <button class="btn btn-outline-success" routerLink="/notifs" > Envoyer une notification globale</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-md-6 col-sm-12">
-      <form class="form-check-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher un client" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-      </form>
-    </div>
-
-
-  </div>
-  <div class="row">
-    <div class="col-md-6 col-sm-12">
-      <div class="table-responsive">
-        <table class="table table-r">
-          <thead>
-            <th></th>
-            <th>Nom</th>
-            <th>Age</th>
-          </thead>
-          <tbody>
-            <tr routerLink="/client">
-              <td>
-                  <img class=" img img-thumbnail   rounded-circle" src="./assets/img/faces/marc.jpg" />
-              
-              </td>
-              <td>
-                Alec Thompson
-              <td>30</td>
-            </tr>
-            <tr>
-              <td>
-                <a href="javascript:void(0)">
-                  <img class="img img-thumbnail rounded-circle" src="./assets/img/faces/marc.jpg" />
-                </a>
-              </td>
-              <td>
-                Alec Thompson
-              <td>30</td>
-            </tr>
-            <tr>
-              <td>
-                <a href="javascript:void(0)">
-                  <img class="img img-thumbnail rounded-circle" src="./assets/img/faces/marc.jpg" />
-                </a>
-              </td>
-              <td>
-                Alec Thompson
-              <td>30</td>
-            </tr>
-            <tr>
-              <td>
-                <a href="javascript:void(0)">
-                  <img class="img img-thumbnail rounded-circle" src="./assets/img/faces/marc.jpg" />
-                </a>
-              </td>
-              <td>
-                Alec Thompson
-              <td>30</td>
-            </tr>
-            <tr>
-              <td>
-                <a href="javascript:void(0)">
-                  <img class="img img-thumbnail rounded-circle" src="./assets/img/faces/marc.jpg" />
-                </a>
-              </td>
-              <td>
-                Alec Thompson
-              <td>30</td>
-            </tr>
-            <tr>
-              <td>
-                <a href="javascript:void(0)">
-                  <img class="img img-thumbnail rounded-circle" src="./assets/img/faces/marc.jpg" />
-                </a>
-              </td>
-              <td>
-                Alec Thompson
-              <td>30</td>
-            </tr>
-          </tbody>
-        </table>
+    <div class="col-sm-12 col-md-8">
+      <div class="card">
+        <h1 class="card-header">Abonnés </h1>
+        <div class="card-body menuB">
+          <button class="btn btn-outline-success " routerLink="/addUser"> Ajouter un abonné</button>
+          <button class="btn btn-outline-danger" routerLink="/notifs"> Envoyer une notification</button>
+        </div>
+        <form class="form-check-inline card-body">
+          <input class="form-control" type="search" placeholder="Rechercher un abonné" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Rechercher</button>
+        </form>
       </div>
+
     </div>
+    <div class="col-sm-12 col-md-10">
+
+
+      <div class="card">
+        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+        </mat-paginator>
+        <div class="example-container mat-elevation-z8 card-body">
+
+          <mat-table [dataSource]="datasource" matSort>
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="Nom">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.Nom}} </mat-cell>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="Photo">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Photo </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.Photo}} </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="Sexe">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Sexe </mat-header-cell>
+              <mat-cell *matCellDef="let row"> {{row.Sexe}} </mat-cell>
+            </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="Action">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> <button routerLink="/client" class="btn btn-group btn-outline-primary">
+                    Consulter</button> </mat-cell>
+                </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+          </mat-table>
+        </div>
+      </div>
+
+    </div>
+  </div>

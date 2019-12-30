@@ -1,16 +1,41 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { OwlOptions } from 'ngx-owl-carousel-o';
+import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 
 @Component({
-  selector: 'app-clients',
-  templateUrl: './clients.component.html',
-  styleUrls: ['./clients.component.scss']
+  selector: 'app-livres',
+  templateUrl: './livres.component.html',
+  styleUrls: ['./livres.component.scss']
 })
-export class ClientsComponent implements OnInit {
+export class LivresComponent implements OnInit {
+  customOptions: OwlOptions = {
+    loop: true,
+    mouseDrag: true,
+    touchDrag: false,
+    pullDrag: false,
+    dots: false,
+    navSpeed: 700,
+    navText: ['', ''],
+    responsive: {
+      0: {
+        items: 1
+      },
+      400: {
+        items: 2
+      },
+      740: {
+        items: 3
+      },
+      940: {
+        items: 4
+      }
+    },
+    nav: true
+  };
   @ViewChild(MatSort, { static: false }) sort: MatSort;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns = ['Photo', 'Nom', 'Sexe', 'Action'];
+  displayedColumns = ['Photo', 'Nom', 'Sexe'];
   ELEMENT_DATA = [
     { ID: 1, Nom: 'Houssein', Sexe: 'Masculin' },
     { ID: 2, Nom: 'Houssein', Sexe: 'Masculin' },
@@ -36,5 +61,6 @@ export class ClientsComponent implements OnInit {
     this.datasource.sort = this.sort;
     this.datasource.paginator = this.paginator;
   }
+
 
 }

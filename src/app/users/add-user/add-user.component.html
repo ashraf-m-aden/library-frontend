@@ -1,8 +1,8 @@
 <div class="col-md-8">
   <div class="card">
     <div class="card-header card-header-danger">
-      <h4 class="card-title">Client</h4>
-      <p class="card-category">Ajout d'un nouveau client</p>
+      <h4 class="card-title">Abonné</h4>
+      <p class="card-category">Ajout d'un nouveau abonné</p>
     </div>
     <div class="card-body">
       <form>
@@ -41,28 +41,20 @@
 
         <div class="row">
           <div class="col-md-12">
-            <label>Objectifs</label>
+            <label>Genre</label>
             <mat-form-field class="example-full-width">
               <mat-select matInput name="" id="">
-                <mat-option value="">Remise en forme</mat-option>
-                <mat-option value="">Bodybuilding</mat-option>
-                <mat-option value="">Prise de masse</mat-option>
-                <mat-option value="">Perte de gras</mat-option>
+                <mat-option value=0>Homme</mat-option>
+                <mat-option value=1>Femme</mat-option>
+
               </mat-select>
             </mat-form-field>
-            <!-- <div class="form-group">
-
-                                <div class="form-group">
-                                    <label class="bmd-label-floating"> Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo.</label>
-                                    <textarea class="form-control" rows="5"></textarea>
-                                </div>
-                            </div> -->
           </div>
         </div>
 
         <button mat-raised-button type="submit" class="btn btn-danger pull-right">Charger une photo</button>
 
-        <button mat-raised-button type="submit" class="btn btn-danger pull-right">Ajouter le client</button>
+        <button mat-raised-button type="submit" class="btn btn-danger pull-right">Ajouter l'abonné</button>
         <div class="clearfix"></div>
       </form>
     </div>

@@ -1,4 +1,4 @@
-import { FinancesComponent } from './finances/finances/finances.component';
+import { GlobalStatsComponent } from './statistic/global-stats/global-stats.component';
 import { NotifsComponent } from './notification/notifs/notifs.component';
 import { SingleNotifComponent } from './notification/single-notif/single-notif.component';
 import { ClientsComponent } from './users/clients/clients.component';
@@ -8,10 +8,15 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ClientComponent } from './users/client/client.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '', redirectTo: '/dashboard', pathMatch: 'full'
-  }, {
+  },
+  {
+    path: 'bookDashboard',
+    loadChildren: './book-dashboard/books.module#BookDashboardModule'
+  },
+  {
     path: 'dashboard', component: DashboardComponent, pathMatch: 'full'
   },
   {
@@ -28,18 +33,19 @@ const routes: Routes = [
   },
   {
     path: 'notifs', component: NotifsComponent, pathMatch: 'full'
-  },
+  }
+  ,
   {
-    path: 'finances', component: FinancesComponent, pathMatch: 'full'
+    path: 'GS', component: GlobalStatsComponent, pathMatch: 'full'
   }
 ];
 
 export const components = [
   AddUserComponent, DashboardComponent, ClientsComponent, ClientComponent,
-   SingleNotifComponent, NotifsComponent, FinancesComponent
+  SingleNotifComponent, NotifsComponent, GlobalStatsComponent
 ];
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

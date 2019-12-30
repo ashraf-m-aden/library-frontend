@@ -1,17 +1,32 @@
-.wrapper {
-  display: flex;
+.navigation{
   width: 100%;
-  align-items: stretch;
+  text-align: right;
 }
-.sidebar {
-  
-  min-height: 100%;
+.brand{
+  height: 100px;
+  width: auto;
+}
+.navbar{
+  display: flex;
+  justify-content: space-between;
+}
+.logo{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .content {
   width: 100%;
   height: 100%;
 }
+.filler{
+  flex: 1 1 auto;
+}
 
-.row{
-  margin: 1%;
+.top{
+  width: auto;
+  height: 50px;
+  background-image: url(../assets/img/bg.jpg);
+  background-size: cover;
 }
