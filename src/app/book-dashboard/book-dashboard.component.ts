@@ -1,6 +1,8 @@
+import { BooksService } from './../services/books.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-book-dashboard',
@@ -8,56 +10,69 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./book-dashboard.component.scss']
 })
 export class BookDashboardComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild('search', { static: false }) searchObject;
-
-  search = false;
-  titleSearch;
-  id;
-  displayedColumns = ['ID', 'Nom', 'auteur', 'Annee', 'action'];
-  ELEMENT_DATA = [
-    { ID: 1, Nom: 'Hydrogen', auteur: 1.0079, Annee: 'H' },
-    { ID: 2, Nom: 'Helium', auteur: 4.0026, Annee: 'He' },
-    { ID: 3, Nom: 'Lithium', auteur: 6.941, Annee: 'Li' },
-    { ID: 4, Nom: 'Beryllium', auteur: 9.0122, Annee: 'Be' },
-    { ID: 5, Nom: 'Boron', auteur: 10.811, Annee: 'B' },
-    { ID: 6, Nom: 'Carbon', auteur: 12.0107, Annee: 'C' },
-    { ID: 7, Nom: 'Nitrogen', auteur: 14.0067, Annee: 'N' },
-    { ID: 8, Nom: 'Oxygen', auteur: 15.9994, Annee: 'O' },
-    { ID: 9, Nom: 'Fluorine', auteur: 18.9984, Annee: 'F' },
-    { ID: 10, Nom: 'Neon', auteur: 20.1797, Annee: 'Ne' },
-  ];
-  datasource = new MatTableDataSource(this.ELEMENT_DATA);
-  length = this.ELEMENT_DATA.length;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  searchForm: FormGroup;
+  searchResults = false;
+  displayedColumns = ['title', 'author', 'genre', 'Action'];
+  Books = [];
+  genres;
+  datasource;
+  length;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10];
-  searchData = [];
-  constructor(private ar: ActivatedRoute) {
-    this.id = ar.snapshot.paramMap.get('id');
+  allBooks = true;
+  specificBooks = false;
+  bookGenre;
+  constructor(
+    private bookS: BooksService,
+    private route: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.bookS.getBooks().subscribe(data => {
+      this.datasource = new MatTableDataSource(data);
+      this.length = data.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
+    });
+    this.bookS.getGenres().subscribe(data => {
+      this.genres = data;
+    });
   }
-
   ngOnInit() {
-    //
-    if (this.searchObject === '') {
-      this.search = false;
-    }
-  }
-  searchBook() {
-    // tslint:disable-next-line:prefer-for-of
-    for (let index = 0; index < this.ELEMENT_DATA.length; index++) {
-      if (this.ELEMENT_DATA[index].Nom.toLocaleLowerCase().includes(this.titleSearch)) {
-        this.searchData.push(this.ELEMENT_DATA[index]);
-      }
-      this.search = true;
-
-    }
+    this.initForm();
   }
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-    this.datasource.sort = this.sort;
-    this.datasource.paginator = this.paginator;
+    //
   }
-
-
+  search() {
+    this.Books = [];
+    const letter = this.searchForm.get('letter').value;
+    this.bookS.getBooks().subscribe(data => {
+      data.forEach(book => {
+        if (book.title.toLowerCase().includes(letter.toLowerCase())) {
+          this.Books.push(book);
+          this.searchResults = true;
+        }
+      });
+    });
+  }
+  initForm() {
+    this.searchForm = this.formBuilder.group({
+      letter: ['', [Validators.required]]
+    });
+  }
+  details(idBook) {
+    this.route.navigate(['/book/', idBook]);
+  }
+  displayAll() {
+    this.allBooks = true;
+    this.specificBooks = false;
+  }
+  display(genre) {
+    this.allBooks = false;
+    this.specificBooks = true;
+    this.bookGenre = genre.name;
+  }
 }

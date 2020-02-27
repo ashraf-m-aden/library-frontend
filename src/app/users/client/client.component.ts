@@ -1,6 +1,8 @@
+import { ClientsService } from './../../services/clients.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { ActivatedRoute, Router } from '@angular/router';
 export interface PeriodicElement {
   name: string;
   ID: number;
@@ -12,9 +14,11 @@ export interface PeriodicElement {
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss']
 })
-export class ClientComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+export class ClientComponent  {
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  id; // idUser
+  User; // user Data
   public pieChartLabels = ['Journal', 'Roman', 'Conte', 'Bande dessinée'];
   public pieChartData = [10, 4, 8, 9];
   public pieChartType = 'pie';
@@ -30,7 +34,7 @@ export class ClientComponent implements OnInit {
     { ID: 7, name: 'Nitrogen', DD: 14.0067, DR: 'N', Agent: 'Ashraf' },
     { ID: 8, name: 'Oxygen', DD: 15.9994, DR: 'O', Agent: 'Ashraf' },
     { ID: 9, name: 'Fluorine', DD: 18.9984, DR: 'F', Agent: 'Ashraf' },
-    { ID: 10, name: 'Neon', DD: 20.1797, DR: 'Ne', Agent: 'Ashraf' },
+    { ID: 10, name: 'Neon', DD: 20.1797, DR: 'Ne', Agent: 'Ashraf' }
   ];
   length = this.ELEMENT_DATA.length;
   pageSize = 10;
@@ -43,17 +47,22 @@ export class ClientComponent implements OnInit {
   setPageSizeOptions(setPageSizeOptionsInput: string) {
     this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
   }
-
-  constructor() { }
-
-  ngOnInit() {
-    // this.dataSource.sort = this.sort;
-    // this.dataSource.paginator = this.paginator;
+  constructor(
+    private aR: ActivatedRoute,
+    private route: Router,
+    private userS: ClientsService
+  ) {
+    this.id = this.aR.params.subscribe(params => {
+      this.id = params.id;
+      userS.getClient(this.id).subscribe((data: any) => {
+        this.User = data[0];
+        console.log(this.User);
+      });
+    });
   }
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-
   }
 }

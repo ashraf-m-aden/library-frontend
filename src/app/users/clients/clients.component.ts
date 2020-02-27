@@ -1,6 +1,8 @@
+import { ClientsService } from './../../services/clients.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-clients',
@@ -8,33 +10,53 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
   styleUrls: ['./clients.component.scss']
 })
 export class ClientsComponent implements OnInit {
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns = ['Photo', 'Nom', 'Sexe', 'Action'];
-  ELEMENT_DATA = [
-    { ID: 1, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 2, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 3, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 4, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 5, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 6, Nom: 'Fatouma', Sexe: 'Feminin' },
-    { ID: 7, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 8, Nom: 'Fatouma', Sexe: 'Feminin', },
-    { ID: 9, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 10, Nom: 'Fatouma', Sexe: 'Feminin' },
-  ];
-  datasource = new MatTableDataSource(this.ELEMENT_DATA);
-  length = this.ELEMENT_DATA.length;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  searchForm: FormGroup;
+  searchResults = false;
+  displayedColumns = ['name', 'age', 'genre', 'Action'];
+  Users = [];
+  datasource;
+  length;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10];
-  constructor() { }
-
+  constructor(
+    private userS: ClientsService,
+    private route: Router,
+    private formBuilder: FormBuilder
+  ) {
+    this.userS.getClients().subscribe(data => {
+      this.datasource = new MatTableDataSource(data);
+      this.length = data.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
+    });
+  }
+  details(idUser) {
+    this.route.navigate(['/client/', idUser]);
+  }
   ngOnInit() {
+    this.initForm();
   }
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-    this.datasource.sort = this.sort;
-    this.datasource.paginator = this.paginator;
+    //
   }
-
+  search() {
+    this.Users = [];
+    const letter = this.searchForm.get('letter').value;
+    this.userS.getClients().subscribe(data => {
+      data.forEach(user => {
+        if ((user.name).toLowerCase().includes(letter.toLowerCase())) {
+          this.Users.push(user);
+          this.searchResults = true;
+        }
+      });
+    });
+  }
+  initForm() {
+    this.searchForm = this.formBuilder.group({
+      letter: ['', [Validators.required]]
+    });
+  }
 }

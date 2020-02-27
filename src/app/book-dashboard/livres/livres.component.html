@@ -1,104 +1,17 @@
-
-
 <div class="row">
-
-  <div class="col-sm-12 col-md-2 position-sticky" style="background: linear-gradient(#eceef1, #9e8652, transparent), url('../../assets/img/bg.jpg') no-repeat center;">
-    <div class="p-4 navbar-dark"
-      >
-      <nav class="navbar">
-        <span class="navbar-brand border-bottom"> Litteratures</span>
-      </nav>
-      <div class="sidenav">
-        <mat-card class=" btn-outline-secondary menu" routerLink='/bookDashboard'>
-          Tous les livres
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Roman
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Conte
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Biographie
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Journal
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Magasine
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Bande dessinée
-        </mat-card>
-      </div>
-    </div>
-  </div>
   <div class="col-sm-12 col-md-10">
     <div class="card">
       <div class="card-body">
         <owl-carousel-o [options]="customOptions">
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img src="../../assets/img/book1.jpg" class="grow" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
+          <ng-template
+            carouselSlide
+            *ngFor="let book of books"
+            [id]="book.idBook"
+          >
+            <div class="imgCarousel">
+              <img [src]="book.image" [title]="book.title" />
+            </div>
           </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book7.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book3.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book4.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book10.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book6.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book7.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book8.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book9.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-          <ng-template carouselSlide>
-            <mat-card>
-              <mat-card-content><img class="grow" src="../../assets/img/book10.jpg" alt=""></mat-card-content>
-              <mat-card-footer>Titre du livre</mat-card-footer>
-            </mat-card>
-          </ng-template>
-
-
         </owl-carousel-o>
       </div>
     </div>
@@ -106,39 +19,57 @@
 </div>
 <div class="row">
   <div class="col-sm-12">
-
-
     <div class="card">
-      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
+      <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons
+      >
       </mat-paginator>
       <div class="example-container mat-elevation-z8 card-body">
-
         <mat-table [dataSource]="datasource" matSort>
-
           <!-- ID Column -->
-          <ng-container matColumnDef="Nom">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.Nom}} </mat-cell>
+          <ng-container matColumnDef="title">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nom
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.title }} </mat-cell>
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="Photo">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Photo </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.Photo}} </mat-cell>
+          <ng-container matColumnDef="author">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Auteur
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.author }} </mat-cell>
           </ng-container>
 
           <!-- Name Column -->
-          <ng-container matColumnDef="Sexe">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Sexe </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.Sexe}} </mat-cell>
+          <ng-container matColumnDef="year">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Année
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.year }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Action
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button
+                [routerLink]="['/book', row.idBook]"
+                class="btn btn-outline-info"
+              >
+                Consulter
+              </button>
+            </mat-cell>
           </ng-container>
 
           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;">
-          </mat-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
         </mat-table>
       </div>
     </div>
-
   </div>
 </div>

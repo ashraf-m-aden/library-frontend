@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "national-library-9a519": {
+      "hosting": {
+        "gym": [
+          "national-library-9a519"
+        ]
+      }
+    }
+  }
+}

@@ -5,73 +5,68 @@
         <h4 class="card-title">Livre</h4>
         <p class="card-category">Ajout d'un nouveau livre</p>
       </div>
-
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col-md-8">
     <div class="card">
-
-
-      <form>
+      <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" >
         <div class="row">
-
-          <div class="col-md-6">
+          <div class="col-md-6 form-group">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Nom complet">
+              <input matInput formControlName="title" placeholder="Titre" />
             </mat-form-field>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-4 form-group">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Auteur">
+              <input matInput formControlName="author" placeholder="Auteur" />
             </mat-form-field>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-6 form-group">
             <mat-form-field class="example-full-width">
-              <input matInput placeholder="Année" type="number">
-            </mat-form-field>
-          </div>
-
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <mat-form-field class="example-full-width">
-              <input matInput placeholder="Numero de serie" type="number">
+              <input matInput formControlName="year" placeholder="Année" type="number" />
             </mat-form-field>
           </div>
         </div>
-
+        <div class="row">
+          <div class="col-md-12 form-group">
+            <mat-form-field class="example-full-width">
+              <input matInput formControlName="sNumber" placeholder="Numero de serie" type="number" />
+            </mat-form-field>
+          </div>
+        </div>
 
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-md-12 form-group">
             <label>Genre</label>
             <mat-form-field class="example-full-width">
-              <mat-select matInput name="" id="">
-                <mat-option value=0>Amour</mat-option>
-                <mat-option value=1>Policier</mat-option>
-                <mat-option value=0>Fantastique</mat-option>
-                <mat-option value=1>Horreur</mat-option>
-                <mat-option value=0>Science fiction</mat-option>
-                <mat-option value=1>Historique</mat-option>
+              <mat-select matInput formControlName="genre" name="Genre" id="genre">
+                <mat-option *ngFor="let genre of genres" [value]="genre.name">{{genre.name}}</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
         </div>
-        <div class="row">
-          <div class="col-sm-6"> <button mat-raised-button type="submit" class="btn btn-danger pull-right">Charger une
-              photo</button>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-6"> <button mat-raised-button type="submit" class="btn btn-danger pull-right">Ajouter le
-              livre</button>
-          </div>
+        <div class="form-group" id="pic">
+          <label for="file" class="disappear">Ajouter une photo</label>
+          <input
+            type="file"
+            class="disappear"
+            (change)="upload($event)"
+            accept=".png,.jpg"
+          />
         </div>
 
-
+        <button
+          mat-raised-button
+          type="submit"
+          class="btn btn-danger pull-right"
+          [disabled]="bookForm.invalid"
+        >
+          Ajouter le livre
+        </button>
         <div class="clearfix"></div>
       </form>
     </div>

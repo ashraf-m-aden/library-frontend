@@ -1,14 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
-
+import { BooksService } from 'src/app/services/books.service';
+import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-livres',
   templateUrl: './livres.component.html',
   styleUrls: ['./livres.component.scss']
 })
 export class LivresComponent implements OnInit {
+  @Input() genre: string;
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -16,7 +18,7 @@ export class LivresComponent implements OnInit {
     pullDrag: false,
     dots: false,
     navSpeed: 700,
-    navText: ['', ''],
+    navText: ['precedent', 'suivant'],
     responsive: {
       0: {
         items: 1
@@ -33,34 +35,31 @@ export class LivresComponent implements OnInit {
     },
     nav: true
   };
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  displayedColumns = ['Photo', 'Nom', 'Sexe'];
-  ELEMENT_DATA = [
-    { ID: 1, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 2, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 3, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 4, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 5, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 6, Nom: 'Fatouma', Sexe: 'Feminin' },
-    { ID: 7, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 8, Nom: 'Fatouma', Sexe: 'Feminin', },
-    { ID: 9, Nom: 'Houssein', Sexe: 'Masculin' },
-    { ID: 10, Nom: 'Fatouma', Sexe: 'Feminin' },
-  ];
-  datasource = new MatTableDataSource(this.ELEMENT_DATA);
-  length = this.ELEMENT_DATA.length;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  displayedColumns = ['title', 'author', 'year', 'Action'];
+  datasource;
+  length;
+  books;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10];
-  constructor() { }
+  constructor(
+    private bookS: BooksService,
+    private route: Router,
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit() {
+    this.bookS.getBooksByGenre(this.genre).subscribe(data => {
+      this.books = data;
+      this.datasource = new MatTableDataSource(data);
+      this.length = data.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
+      console.log(this.books);
+        });
   }
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
-    this.datasource.sort = this.sort;
-    this.datasource.paginator = this.paginator;
   }
-
-
 }

@@ -1,0 +1,75 @@
+<div class="row">
+  <div class="col-sm-12 col-md-8">
+    <div class="card">
+      <h2 class="card-header">Genre de litteratures</h2>
+      <form class="form-check-inline card-body" [formGroup]="genreForm">
+        <div class="row">
+          <input
+            class="form-control col-sm-12 col-md-4"
+            formControlName="name"
+            type="text"
+            placeholder="Nom du genre"
+          />
+          <textarea
+            class="form-control col-sm-12 col-md-9"
+            formControlName="description"
+            type="text"
+            placeholder="Description du genre"
+          ></textarea>
+        </div>
+        <button
+          class="btn btn-outline-success"
+          type="submit"
+          (click)="onSubmit()"
+        >
+          Ajouter
+        </button>
+      </form>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-10">
+    <div class="card">
+      <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons
+      >
+      </mat-paginator>
+      <div class="example-container mat-elevation-z8 card-body">
+        <mat-table [dataSource]="datasource" matSort>
+          <!-- ID Column -->
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Nom
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+          </ng-container>
+
+          <!-- Progress Column -->
+          <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Description
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.description }} </mat-cell>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="Action">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Action
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <button class="btn btn-group btn-danger">
+                Supprimer
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
+</div>

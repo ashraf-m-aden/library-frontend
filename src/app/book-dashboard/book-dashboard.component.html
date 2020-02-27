@@ -1,140 +1,144 @@
 <div class="row">
-
-  <div class="col-sm-12 col-md-2 position-sticky" style="background: linear-gradient(#eceef1, #9e8652, transparent), url('../../assets/img/bg.jpg') no-repeat center;">
+  <div
+    class="col-sm-12 col-md-2 position-sticky"
+    style="background: linear-gradient(#eceef1, #9e8652, transparent), url('../../assets/img/bg.jpg') no-repeat center;"
+  >
     <div class="p-4 navbar-dark">
-      <nav class="navbar">
-        <span class="navbar-brand border-bottom"> Litteratures</span>
-      </nav>
-      <div class="sidenav">
-        <mat-card class=" btn-outline-secondary menu" routerLink="['/bookDashboard']">
-          Tous les livres
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Roman
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Conte
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Biographie
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Journal
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Magasine
-        </mat-card>
-        <mat-card class=" btn-outline-secondary menu" [routerLink]="['/type',1]">
-          Bande dessinée
+     <div class="sidenav">
+       <div  (click)="displayAll()" >
+        <mat-card
+        class=" btn-outline-secondary menu"
+      >
+        Tous les genres
+      </mat-card>       </div>
+      <div *ngFor="let genre of genres">
+        <mat-card
+          class=" btn-outline-secondary menu"
+          (click)="display(genre)"
+        >
+          {{ genre.name }}
         </mat-card>
       </div>
+     </div>
     </div>
   </div>
   <div class="col-sm-12 col-md-10">
-  <div class="row">
-    <div class="col-sm-12 col-md-12">
-      <div class="card">
-        <h1 class="card-header">Livres </h1>
-        <div class="card-body menuB">
-          <button class="btn btn-outline-success " routerLink="/addBook"> Ajouter un livre</button>
-          <button class="btn btn-outline-danger" routerLink="/borrowedBook"> Livres empreintés</button>
-        </div>
-        <form class="form-check-inline card-body">
-          <input #search class="form-control" type="search" placeholder="Rechercher un livre" aria-label="Search" value={{titleSearch}}>
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-        <div class="col-sm-12 col-md-12" *ngIf="search">
-          <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
-          </mat-paginator>
-          <div class="example-container mat-elevation-z8">
-      
-            <mat-table [dataSource]="datasource" matSort>
-      
-              <!-- ID Column -->
-              <ng-container matColumnDef="ID">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ID}} </mat-cell>
-              </ng-container>
-      
-              <!-- Progress Column -->
-              <ng-container matColumnDef="auteur">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> auteur </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.auteur}} </mat-cell>
-              </ng-container>
-      
-              <!-- Name Column -->
-              <ng-container matColumnDef="Nom">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Nom}} </mat-cell>
-              </ng-container>
-      
-              <!-- Color Column -->
-              <ng-container matColumnDef="Annee">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Année </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Annee}} </mat-cell>
-              </ng-container>
-              <!-- action Column -->
-              <ng-container matColumnDef="action">
-                <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-                <mat-cell *matCellDef="let row"> <button [routerLink]="['/book',row.ID]"
-                    class="btn btn-outline-info">Voir</button> </mat-cell>
-              </ng-container>
-      
-              <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-              <mat-row *matRowDef="let row; columns: displayedColumns;">
-              </mat-row>
-            </mat-table>
+    <div *ngIf="allBooks" class="row">
+      <div class="col-sm-12 col-md-12">
+        <div class="card">
+          <h1 class="card-header">Livres</h1>
+          <div class="card-body menuB">
+            <button class="btn btn-outline-success " routerLink="/addBook">
+              Ajouter un livre
+            </button>
+            <button class="btn btn-outline-danger" routerLink="/borrowedBook">
+              Livres empreintés
+            </button>
           </div>
-      
+          <form class="form-check-inline card-body" [formGroup]="searchForm">
+            <input
+              class="form-control"
+              formControlName="letter"
+              type="search"
+              placeholder="Rechercher un livre"
+              aria-label="Rechercher"
+            />
+            <button
+              class="btn btn-outline-success"
+              type="submit"
+              [disabled]="searchForm.invalid"
+              (click)="search()"
+            >
+              Rechercher
+            </button>
+            <button
+              class="btn btn-outline-danger"
+              [disabled]="searchForm.invalid"
+              (click)="Books = []"
+            >
+              Effacer
+            </button>
+          </form>
+          <div v-if="searchResults">
+            <mat-nav-list>
+              <mat-list-item *ngFor="let book of Books">
+                <table>
+                  <tr>
+                    <td>
+                      <span>{{ book.title }}</span>
+                    </td>
+                    <td>
+                      <button
+                        (click)="details(book.idBook)"
+                        class="btn btn-group btn-outline-primary"
+                      >
+                        Consulter
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+              </mat-list-item>
+            </mat-nav-list>
+          </div>
+          <div class="col-sm-12 col-md-12" *ngIf="search">
+            <mat-paginator
+              [length]="length"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="pageSizeOptions"
+              showFirstLastButtons
+            >
+            </mat-paginator>
+            <div class="example-container mat-elevation-z8">
+              <mat-table [dataSource]="datasource" matSort>
+                <!-- ID Column -->
+                <ng-container matColumnDef="title">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Titre
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{ row.title }} </mat-cell>
+                </ng-container>
+
+                <!-- Progress Column -->
+                <ng-container matColumnDef="author">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Auteur
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{ row.author }} </mat-cell>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="genre">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Genre
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row"> {{ row.genre }} </mat-cell>
+                </ng-container>
+                <!-- action Column -->
+                <ng-container matColumnDef="Action">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Action
+                  </mat-header-cell>
+                  <mat-cell *matCellDef="let row">
+                    <button
+                      [routerLink]="['/book', row.id]"
+                      class="btn btn-outline-info"
+                    >
+                      Consulter
+                    </button>
+                  </mat-cell>
+                </ng-container>
+
+                <mat-header-row
+                  *matHeaderRowDef="displayedColumns"
+                ></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns">
+                </mat-row>
+              </mat-table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-12 col-md-12">
-      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
-      </mat-paginator>
-      <div class="example-container mat-elevation-z8">
-  
-        <mat-table [dataSource]="datasource" matSort>
-  
-          <!-- ID Column -->
-          <ng-container matColumnDef="ID">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.ID}} </mat-cell>
-          </ng-container>
-  
-          <!-- Progress Column -->
-          <ng-container matColumnDef="auteur">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> auteur </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.auteur}} </mat-cell>
-          </ng-container>
-  
-          <!-- Name Column -->
-          <ng-container matColumnDef="Nom">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Nom </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.Nom}} </mat-cell>
-          </ng-container>
-  
-          <!-- Color Column -->
-          <ng-container matColumnDef="Annee">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Année </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.Annee}} </mat-cell>
-          </ng-container>
-          <!-- action Column -->
-          <ng-container matColumnDef="action">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-            <mat-cell *matCellDef="let row"> <button [routerLink]="['/book',row.ID]"
-                class="btn btn-outline-info">Voir</button> </mat-cell>
-          </ng-container>
-  
-          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-          <mat-row *matRowDef="let row; columns: displayedColumns;">
-          </mat-row>
-        </mat-table>
-      </div>
-  
-    </div>
+    <app-livres *ngIf="specificBooks" [genre]="bookGenre"></app-livres>
   </div>
-  </div>
-
-  
 </div>

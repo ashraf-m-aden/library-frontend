@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Notification</h1>
+<div mat-dialog-content>
+  <p>Etes vous sûr d'enregistrer {{data.title}} ?</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Annuler</button>
+  <button mat-button (click)="save()" cdkFocusInitial>Enregistrer</button>
+</div>

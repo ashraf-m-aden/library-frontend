@@ -3,16 +3,16 @@
     <div class="card card-profile">
       <div class="card-avatar">
         <a href="javascript:void(0)">
-          <img class="img img-thumbnail rounded-circle" src="./assets/img/faces/marc.jpg" />
+          <img class="img img-thumbnail rounded-circle" [src]="User.image" />
         </a>
       </div>
       <div class="card-body">
-        <h6 class="card-category text-gray">CDC Q6</h6>
-        <h4 class="card-title">Ahmed Houssein</h4>
-        Date de naissance: 1/1/2001 <br>
-        Sexe: Masculin <br>
-        Addresse: Q6 rue 123<br>
-        Numero: 88888888<br>
+        <h6 class="card-category text-gray">{{User.idCDC}}</h6>
+        <h4 class="card-title">{{User.name}}</h4>
+        Age: {{User.age}} <br>
+        Sexe: {{User.genre}} <br>
+        Addresse: {{User.address}}<br>
+        Numero: {{User.number}}<br>
 
         <a href="javascript:void(0)" class="btn btn-danger btn-round" routerLink="/singleNotif">Envoyer une
           notification</a>

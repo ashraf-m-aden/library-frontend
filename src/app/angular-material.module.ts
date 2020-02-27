@@ -13,7 +13,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatTabsModule} from '@angular/material/tabs';
-import { MatSortModule, MatPaginatorModule } from '@angular/material';
+import { MatSortModule, MatPaginatorModule, MatDialogModule, MatDialogClose } from '@angular/material';
 
 
 @NgModule({
@@ -24,7 +24,7 @@ import { MatSortModule, MatPaginatorModule } from '@angular/material';
   exports: [MatSidenavModule, MatIconModule, MatTabsModule,
     BrowserAnimationsModule, MatMenuModule, MatSortModule,
     MatMenuModule, MatButtonModule, MatPaginatorModule,
-    MatToolbarModule, MatListModule,
+    MatToolbarModule, MatListModule, MatDialogModule,
     MatDividerModule, MatInputModule,
     MatCardModule, MatTableModule, MatSelectModule
   ]

@@ -1,0 +1,33 @@
+.navigation{
+    width: 100%;
+    text-align: right;
+  }
+  .container{
+    background: white;
+  }
+  .brand{
+    height: 100px;
+    width: auto;
+  }
+  .navbar-nav{
+    display: flex;
+  }
+  .logo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .content {
+    width: 100%;
+    height: 100%;
+  }
+  .filler{
+flex-grow: 1;  }
+  
+  .top{
+    width: auto;
+    height: 10px;
+    background: rgb(52,153,210);
+    background: linear-gradient(90deg, rgba(52,153,210,1) 19%, rgba(208,244,203,1) 95%);  background-size: cover;
+  }
