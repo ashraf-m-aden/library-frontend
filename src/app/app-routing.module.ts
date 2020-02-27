@@ -1,3 +1,4 @@
+import { BorrowBookComponent } from './book-dashboard/borrow-book/borrow-book.component';
 import { GlobalStatsComponent } from './statistic/global-stats/global-stats.component';
 import { NotifsComponent } from './notification/notifs/notifs.component';
 import { SingleNotifComponent } from './notification/single-notif/single-notif.component';
@@ -57,6 +58,9 @@ export const routes: Routes = [
   },
   {
     path: 'borrowedBook', component: BorrowedBookComponent, pathMatch: 'full'
+  },
+  {
+    path: 'borrowBook/:id', component: BorrowBookComponent, pathMatch: 'full'
   },
   {
     path: 'allCDC',

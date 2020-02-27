@@ -8,8 +8,8 @@
             *ngFor="let book of books"
             [id]="book.idBook"
           >
-            <div class="imgCarousel">
-              <img [src]="book.image" [title]="book.title" />
+            <div class="imgWrapper">
+              <img [src]="book.image" [title]="book.title" class="imgCarousel" />
             </div>
           </ng-template>
         </owl-carousel-o>

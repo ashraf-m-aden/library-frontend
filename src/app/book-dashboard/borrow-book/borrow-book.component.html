@@ -1,0 +1,104 @@
+<div class="row">
+  <div class="col-sm-12 col-md-6">
+    <mat-horizontal-stepper linear=true #stepper>
+      <mat-step [stepControl]="searchForm">
+        <form [formGroup]="searchForm">
+          <ng-template matStepLabel>Qui l'empreinte?</ng-template>
+          <div>
+            <form class="form-check-inline card-body" [formGroup]="searchForm">
+              <input
+                class="form-control"
+                formControlName="letter"
+                type="search"
+                placeholder="Rechercher un abonné"
+                aria-label="Rechercher"
+              />
+              <button
+                class="btn btn-outline-success"
+                type="submit"
+                [disabled]="searchForm.invalid"
+                (click)="search()"
+              >
+                Rechercher
+              </button>
+              <button
+                class="btn btn-outline-danger"
+                [disabled]="searchForm.invalid"
+                (click)="Users = []"
+              >
+                Effacer
+              </button>
+            </form>
+          </div>
+          <div *ngIf="searchResults">
+            <mat-nav-list>
+              <mat-list-item *ngFor="let user of Users">
+                <table>
+                  <tr>
+                    <td>
+                      <span>{{ user.name }}</span>
+                    </td>
+                    <td>
+                      <button
+                        (click)="choose(user)"
+                        class="btn btn-group btn-outline-primary"
+                      >
+                        Choisir
+                      </button>
+                    </td>
+                  </tr>
+                </table>
+              </mat-list-item>
+            </mat-nav-list>
+          </div>
+          <div *ngIf="selected">
+            <mat-nav-list>
+              <mat-list-item>
+                <table>
+                  <tr>
+                    <td>
+                      <span>{{ choosenUser?.name }}</span>
+                    </td>
+                  </tr>
+                </table>
+              </mat-list-item>
+            </mat-nav-list>
+          </div>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="secondFormGroup">
+        <form [formGroup]="secondFormGroup">
+          <ng-template matStepLabel>Date de retour</ng-template>
+          <mat-form-field class="example-full-width">
+            <mat-label>Date de retour</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              (dateInput)="date($event.value)"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext >Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Confirmer</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>

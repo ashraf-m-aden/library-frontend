@@ -1,1 +1,55 @@
-<h1>Book {{id}}</h1>
+<div class="row">
+  <div class="col-sm-12 col-md-4">
+    <div class="card card-profile">
+      <div class="card-avatar imgWrapper">
+        <img class="imgCarousel" [src]="book.image" />
+      </div>
+      <div class="card-body">
+        <h6 class="card-category text-gray">{{ book.idCDC }} -- Status: <span *ngIf="book.disponible" class="text-success">Disponible</span>
+            <span class="text-danger" *ngIf="!book.disponible">Non disponible</span></h6>
+        <h4 class="card-title">{{ book.title }}</h4>
+        Auteur: {{ book.author }} <br />
+        Année: {{ book.year }} <br />
+        Genre: {{ book.genre }}<br />
+        Numero de serie: {{ book.sNumber }}<br />
+
+        <a *ngIf="book.disponible"
+          href="javascript:void(0)"
+          class="btn btn-danger btn-round"
+          [routerLink]='["/borrowBook/", book.idBook]'
+          >Preter</a
+        >
+        <a
+        class="btn btn-danger btn-round"
+        [routerLink]='["/borrowBook/", book.idBook]'
+        >Preter</a
+      >
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-12 col-md-8">
+    <mat-toolbar>
+      Historique du Livre
+    </mat-toolbar>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titre</th>
+          <th scope="col">Genre</th>
+          <th scope="col">Annee</th>
+          <th scope="col">Auteur</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of Books; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.genre }}</td>
+          <td>{{ book.year }}</td>
+          <td>{{ book.author }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

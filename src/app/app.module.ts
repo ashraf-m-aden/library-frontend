@@ -1,3 +1,4 @@
+import { CdcService } from './services/cdc.service';
 import { Dialog } from './users/add-user/add-user.component';
 import { BooksService } from './services/books.service';
 import { ClientsService } from './services/clients.service';
@@ -21,6 +22,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { GestionModule } from './gestion/gestion.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
+import { BorrowBookComponent } from './book-dashboard/borrow-book/borrow-book.component';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyAQOjGK_jq1YWh-Kvb_iSC9OjewqFCy2Ds',
@@ -35,7 +37,7 @@ const firebaseConfig = {
 
 @NgModule({
   entryComponents: [Dialog],
-  declarations: [AppComponent, components, Dialog],
+  declarations: [AppComponent, components, Dialog, BorrowBookComponent],
   imports: [
     AngularFireModule.initializeApp(firebaseConfig),
     BrowserModule,
@@ -52,7 +54,7 @@ const firebaseConfig = {
     CarouselModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [ClientsService, BooksService],
+  providers: [ClientsService, BooksService, CdcService  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

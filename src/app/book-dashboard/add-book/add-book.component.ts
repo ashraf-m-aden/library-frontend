@@ -58,7 +58,8 @@ export class AddBookComponent implements OnInit {
       enabled: true,
       genre: this.bookForm.get('genre').value,
       idCDC: '',
-      image: ''
+      image: '',
+      disponible:true
     };
 
     this.openDialog();
