@@ -11,10 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class BorrowBookComponent implements OnInit {
   isLinear = true;
   searchForm: FormGroup;
-  secondFormGroup: FormGroup;
+  borrowForm: FormGroup;
   Users;
   searchResults = false;
   selected = false;
+  errorMessage = false;
   returnDate;
   choosenUser;
   myFilter = (d: Date | null): boolean => {
@@ -29,30 +30,56 @@ export class BorrowBookComponent implements OnInit {
 
   date(date) {
     this.returnDate = date;
-    }
+  }
   ngOnInit() {
-    this.initForm();
-    this.secondFormGroup = this.formBuilder.group({
-      secondCtrl: ['', Validators.required]
+    this.initsearchForm();
+    this.borrowForm = this.formBuilder.group({
+      returnDate: ['', Validators.required]
     });
+  }
+  onSubmit() {
+    const event = new Date(this.borrowForm.get('returnDate').value);
+
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    console.log(event.toLocaleDateString('fr-FR', options));
+    console.log(this.choosenUser);
   }
   search() {
     this.Users = [];
     this.selected = false;
-    const letter = this.searchForm.get('letter').value;
-    this.userS.getClients().subscribe(data => {
-      data.forEach(user => {
-        if (user.name.toLowerCase().includes(letter.toLowerCase())) {
-          this.Users.push(user);
-          this.searchResults = true;
+    const letter = this.searchForm
+      .get('letter')
+      .value.trim()
+      .toLowerCase();
+    if (letter === '') {
+      this.errorMessage = true;
+    } else {
+      this.userS.getClients().subscribe(data => {
+        data.forEach(user => {
+          if (user.name.toLowerCase().includes(letter)) {
+            this.Users.push(user);
+            this.searchResults = true;
+          }
+        });
+        if (this.Users.length === 0) {
+          this.errorMessage = true;
         }
       });
-    });
+    }
   }
-  initForm() {
+  initsearchForm() {
     this.searchForm = this.formBuilder.group({
       letter: ['', [Validators.required]]
     });
+    this.Users = [];
+    this.selected = false;
+    this.searchResults = false;
+    this.errorMessage = false;
   }
   choose(choosenUser) {
     this.choosenUser = choosenUser;

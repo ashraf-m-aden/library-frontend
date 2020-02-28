@@ -2,16 +2,16 @@
   <div class="col-sm-12 col-md-4">
     <div class="card card-profile">
       <div class="card-avatar imgWrapper">
-        <img class="imgCarousel" [src]="book.image" />
+        <img class="imgCarousel" [src]="book?.image" />
       </div>
       <div class="card-body">
-        <h6 class="card-category text-gray">{{ book.idCDC }} -- Status: <span *ngIf="book.disponible" class="text-success">Disponible</span>
-            <span class="text-danger" *ngIf="!book.disponible">Non disponible</span></h6>
-        <h4 class="card-title">{{ book.title }}</h4>
-        Auteur: {{ book.author }} <br />
-        Année: {{ book.year }} <br />
-        Genre: {{ book.genre }}<br />
-        Numero de serie: {{ book.sNumber }}<br />
+        <h6 class="card-category text-gray">{{ book?.idCDC }} -- Status: <span *ngIf="book?.disponible" class="text-success">Disponible</span>
+            <span class="text-danger" *ngIf="!book?.disponible">Non disponible</span></h6>
+        <h4 class="card-title">{{ book?.title }}</h4>
+        Auteur: {{ book?.author }} <br />
+        Année: {{ book?.year }} <br />
+        Genre: {{ book?.genre }}<br />
+        Numero de serie: {{ book?.sNumber }}<br />
 
         <a *ngIf="book.disponible"
           href="javascript:void(0)"
