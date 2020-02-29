@@ -56,7 +56,6 @@ export class LivresComponent implements OnInit {
       this.length = data.length;
       this.datasource.sort = this.sort;
       this.datasource.paginator = this.paginator;
-      console.log(this.books);
         });
   }
   // tslint:disable-next-line:use-lifecycle-interface

@@ -14,7 +14,7 @@
           <input
             class="form-control"
             formControlName="letter"
-            type="search"
+            type="text"
             placeholder="Rechercher un CDC"
             aria-label="Rechercher"
           />
@@ -34,8 +34,10 @@
           Effacer
         </button>
         </form>
+        <button class="btn btn-group btn-danger" *ngIf="errorMessage">Aucun CDC de ce nom trouvé</button>
+
       </div>
-      <div v-if="searchResults">
+      <div *ngIf="searchResults">
         <mat-nav-list>
           <mat-list-item *ngFor="let cdc of Cdcs">
             <table>

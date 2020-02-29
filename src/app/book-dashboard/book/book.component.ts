@@ -11,6 +11,8 @@ export class BookComponent implements OnInit {
   id;
   Books = [];
   book;
+  borrow = false;
+  prets;
   constructor(
     private aR: ActivatedRoute,
     private router: Router,
@@ -20,10 +22,11 @@ export class BookComponent implements OnInit {
       this.id = params.id;
       bookS.getBook(this.id).subscribe((data: any) => {
         this.book = data[0];
+        this.bookS.getPretBook(this.book.idBook).subscribe(
+          results => this.prets = results
+        );
+
       });
-    });
-    bookS.getBooks().subscribe(data => {
-      this.Books = data;
     });
   }
 

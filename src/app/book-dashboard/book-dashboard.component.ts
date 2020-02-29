@@ -24,6 +24,7 @@ export class BookDashboardComponent implements OnInit {
   allBooks = true;
   specificBooks = false;
   bookGenre;
+  errorMessage: boolean;
   constructor(
     private bookS: BooksService,
     private route: Router,
@@ -48,20 +49,33 @@ export class BookDashboardComponent implements OnInit {
   }
   search() {
     this.Books = [];
-    const letter = this.searchForm.get('letter').value;
-    this.bookS.getBooks().subscribe(data => {
-      data.forEach(book => {
-        if (book.title.toLowerCase().includes(letter.toLowerCase())) {
-          this.Books.push(book);
-          this.searchResults = true;
-        }
+    const letter = this.searchForm
+      .get('letter')
+      .value.toLowerCase()
+      .trim();
+    if (letter === '') {
+      this.errorMessage = true;
+    } else {
+      this.bookS.getBooks().subscribe(data => {
+        data.forEach(book => {
+          if (book.title.toLowerCase().includes(letter.toLowerCase())) {
+            this.Books.push(book);
+            this.searchResults = true;
+          }
+        });
       });
-    });
+      if (this.Books.length === 0) {
+        this.errorMessage = true;
+      }
+    }
   }
   initForm() {
     this.searchForm = this.formBuilder.group({
       letter: ['', [Validators.required]]
     });
+    this.Books = [];
+    this.searchResults = false;
+    this.errorMessage = false;
   }
   details(idBook) {
     this.route.navigate(['/book/', idBook]);

@@ -10,14 +10,11 @@
           Envoyer une notification
         </button>
       </div>
-      <form
-        class="form-check-inline card-body"
-        [formGroup]="searchForm"
-      >
+      <form class="form-check-inline card-body" [formGroup]="searchForm">
         <input
           class="form-control"
           formControlName="letter"
-          type="search"
+          type="text"
           placeholder="Rechercher un abonné"
           aria-label="Rechercher"
         />
@@ -30,22 +27,26 @@
           Rechercher
         </button>
         <button
-        class="btn btn-outline-danger"
-        [disabled]="searchForm.invalid"
-        (click)="Users= []"
-      >
-        Effacer
-      </button>
+          class="btn btn-outline-danger"
+          [disabled]="searchForm.invalid"
+          (click)="this.initForm()"
+        >
+          Effacer
+        </button>
       </form>
-    </div>
-    <div v-if="searchResults">
-      <mat-nav-list>
-        <mat-list-item *ngFor="let user of Users">
-          <table>
+      <div *ngIf="searchResults">
+        <table class="table table-striped">
+          <thead>
             <tr>
-              <td>
-                <span>{{ user.name }}</span>
-              </td>
+              <th scope="col">#</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of Users; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ user.name }}</td>
               <td>
                 <button
                   (click)="details(user.idUser)"
@@ -55,11 +56,18 @@
                 </button>
               </td>
             </tr>
-          </table>
-        </mat-list-item>
-      </mat-nav-list>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <button class="btn btn-group btn-danger" *ngIf="errorMessage">
+          Cet utilisateur n'existe pas
+        </button>
+      </div>
     </div>
   </div>
+</div>
+<div class="row">
   <div class="col-sm-12 col-md-10">
     <div class="card">
       <mat-paginator

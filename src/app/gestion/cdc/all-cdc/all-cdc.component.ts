@@ -19,6 +19,7 @@ export class AllCDCComponent implements OnInit {
   length;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10];
+  errorMessage: boolean;
   constructor(
     private cdcS: CdcService,
     private route: Router,
@@ -43,19 +44,32 @@ export class AllCDCComponent implements OnInit {
   }
   search() {
     this.Cdcs = [];
-    const letter = this.searchForm.get('letter').value;
-    this.cdcS.getCdcs().subscribe(data => {
-      data.forEach(cdc => {
-        if ((cdc.name).toLowerCase().includes(letter.toLowerCase())) {
-          this.Cdcs.push(cdc);
-          this.searchResults = true;
-        }
+    const letter = this.searchForm
+      .get('letter')
+      .value.toLowerCase()
+      .trim();
+    if (letter === '') {
+      this.errorMessage = true;
+    } else {
+      this.cdcS.getCdcs().subscribe(data => {
+        data.forEach(cdc => {
+          if (cdc.name.toLowerCase().includes(letter)) {
+            this.Cdcs.push(cdc);
+            this.searchResults = true;
+          }
+        });
       });
-    });
+      if (this.Cdcs.length === 0) {
+        this.errorMessage = true;
+      }
+    }
   }
   initForm() {
     this.searchForm = this.formBuilder.group({
       letter: ['', [Validators.required]]
     });
+    this.Cdcs = [];
+    this.searchResults = false;
+    this.errorMessage = false;
   }
 }

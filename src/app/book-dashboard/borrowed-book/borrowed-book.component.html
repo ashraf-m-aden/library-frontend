@@ -1,62 +1,102 @@
 <div class="row">
   <div class="col-sm-12 col-md-8">
     <div class="card">
-      <h1 class="card-header">Livres empreintés</h1>
+      <h4 class="card-header">Recherche de livres</h4>
 
-      <form class="form-check-inline my-2 my-lg-0 card-body">
-        <input class="form-control mr-sm-2" type="search" placeholder="Rechercher un livre" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      <form [formGroup]="searchForm">
+        <input
+          class="form-control"
+          formControlName="letter"
+          type="text"
+          placeholder="Rechercher un livre preté"
+          aria-label="Rechercher"
+        />
+        <button
+          class="btn btn-outline-success"
+          type="submit"
+          [disabled]="searchForm.invalid"
+          (click)="search()"
+        >
+          Rechercher
+        </button>
+        <button
+          class="btn btn-outline-danger"
+          [disabled]="searchForm.invalid"
+          (click)="initsearchForm()"
+        >
+          Effacer
+        </button>
       </form>
+      <button class="btn btn-group btn-danger" *ngIf="errorMessage">Aucun livre trouvé</button>
     </div>
+      <table class="table table-striped" *ngIf="searchResults">
+        <thead>
+          <tr class=" small">
+            <th scope="col">#</th>
+            <th scope="col">Titre</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Empreinté par</th>
+            <th scope="col">Date d'empeint</th>
+            <th scope="col">Date de retour</th>
+            <th scope="col">Preté par</th>
+            <th scope="col">Rendu</th>
+            <th scope="col">Etat du livre</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pret of searchPrets; let i = index" class="small">
+            <td>{{ i + 1 }}</td>
+            <td>{{ pret?.title }}</td>
+            <td>{{ pret?.genre }}</td>
+            <td>{{ pret?.userName }}</td>
+            <td>{{ pret?.borrowDate }}</td>
+            <td>{{ pret?.returnDate }}</td>
+            <td>{{ pret?.nameAdmin }}</td>
+            <td *ngIf="pret?.rendu">Oui</td>
+            <td *ngIf="!pret?.rendu">Non</td>
+            <td>{{ pret?.state }}</td>
+            <td class="d-flex flex-row">
+              <button class="btn btn-group  btn-success" (click)="rendu(pret)">Rendu</button>
+              <button  class="btn btn-group  btn-danger" (click)="notifier()">Notifier</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
   </div>
 </div>
 <div class="row">
-  <div class="col-sm-12">
-    <div class="example-container mat-elevation-z8">
+  <div class="col-sm-12 col-md-8">
+    <h4 class="card-header">Tous les livres empreintés</h4>
 
-      <mat-table [dataSource]="all" matSort>
-
-        <!-- ID Column -->
-        <ng-container matColumnDef="ID">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.ID}} </mat-cell>
-        </ng-container>
-
-        <!-- Nom du livre Column -->
-        <ng-container matColumnDef="NameL">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Nom du livre </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.NameL}} </mat-cell>
-        </ng-container>
-
-        <!-- nom de l'abonnée Column -->
-        <ng-container matColumnDef="NameA">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Nom de l'abonné </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.NameA}} </mat-cell>
-        </ng-container>
-
-        <!-- date d'empreint Column -->
-        <ng-container matColumnDef="DD">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Date d'empreint </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.DD}} </mat-cell>
-        </ng-container>
-        <!-- date de retour Column -->
-        <ng-container matColumnDef="DR">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Date de retour </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{row.DR}} </mat-cell>
-
-        </ng-container>
-
-        <ng-container matColumnDef="Action">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Action </mat-header-cell>
-          <mat-cell *matCellDef="let row"> <button (tap)=rendu(row.ID) class="btn btn-outline-success">Rendu</button>
-           <button class="btn btn-outline-danger">Notifier</button> </mat-cell>
-        </ng-container>
-
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;">
-        </mat-row>
-      </mat-table>
-    </div>
+    <table class="table table-striped">
+      <thead>
+        <tr class=" small">
+          <th scope="col">#</th>
+          <th scope="col">Titre</th>
+          <th scope="col">Genre</th>
+          <th scope="col">Empreinté par</th>
+          <th scope="col">Date d'empeint</th>
+          <th scope="col">Date de retour</th>
+          <th scope="col">Preté par</th>
+          <th scope="col">Rendu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pret of Prets; let i = index" class="small">
+          <td>{{ i + 1 }}</td>
+          <td>{{ pret?.title }}</td>
+          <td>{{ pret?.genre }}</td>
+          <td>{{ pret?.userName }}</td>
+          <td>{{ pret?.borrowDate }}</td>
+          <td>{{ pret?.returnDate }}</td>
+          <td>{{ pret?.nameAdmin }}</td>
+          <td *ngIf="pret?.rendu">Oui</td>
+          <td *ngIf="!pret?.rendu">Non</td>
+          <td>{{ pret?.state }}</td>
+         
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>

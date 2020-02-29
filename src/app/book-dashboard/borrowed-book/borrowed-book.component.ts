@@ -1,5 +1,6 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { BooksService } from 'src/app/services/books.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-borrowed-book',
@@ -7,29 +8,57 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
   styleUrls: ['./borrowed-book.component.scss']
 })
 export class BorrowedBookComponent implements OnInit {
-  displayedColumns = ['ID', 'NameL', 'NameA', 'DD', 'DR', 'Action'];
-  a = [
-    {
-      ID: 1, NameL: 'Ashraf et le loup', NameA: 'Ashraf', DD: '2019', DR: '2020'
-    }
-  ];
-  g = [
-    {
-      ID: 2, NameL: 'G et le loup', NameA: 'Goul', DD: '2019', DR: '2020'
-    }
-  ];
-  m = [
-    {
-      ID: 3, NameL: 'mAKA et le loup', NameA: 'MAKA', DD: '2019', DR: '2020'
-    }
-  ];
-  all = this.a.concat(this.g.concat(this.m));
-  constructor() {
-
+  Prets;
+  searchResults;
+  searchPrets;
+  searchForm: FormGroup;
+  errorMessage = false;
+  constructor(private bookS: BooksService, private formbuilder: FormBuilder) {
+    this.bookS.getAllPrets().subscribe(data => (this.Prets = data));
   }
   ngOnInit() {
+    this.initsearchForm();
   }
-  rendu(id) {
-    alert(id);
+  async rendu(pret) {
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+    pret.returnDate = new Date().toLocaleDateString('fr-FR', options),
+    await this.bookS.rendu(pret);
+    this.initsearchForm();
+  }
+  notifier() {
+    //
+  }
+  search() {
+    this.searchPrets = [];
+    const letter = this.searchForm
+      .get('letter')
+      .value.trim()
+      .toLowerCase();
+    if (letter === '') {
+      this.errorMessage = true;
+    } else {
+      this.Prets.forEach(pret => {
+        if (pret.title.toLowerCase().includes(letter)) {
+          this.searchPrets.push(pret);
+          this.searchResults = true;
+        }
+      });
+      if (this.searchPrets.length === 0) {
+        this.errorMessage = true;
+      }
+    }
+  }
+  initsearchForm() {
+    this.searchForm = this.formbuilder.group({
+      letter: ['', [Validators.required]]
+    });
+    this.searchPrets = [];
+    this.searchResults = false;
+    this.errorMessage = false;
   }
 }

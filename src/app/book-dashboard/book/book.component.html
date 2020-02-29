@@ -13,17 +13,12 @@
         Genre: {{ book?.genre }}<br />
         Numero de serie: {{ book?.sNumber }}<br />
 
-        <a *ngIf="book.disponible"
+        <a *ngIf="book?.disponible"
           href="javascript:void(0)"
           class="btn btn-danger btn-round"
-          [routerLink]='["/borrowBook/", book.idBook]'
+          (click)="borrow = true"
           >Preter</a
         >
-        <a
-        class="btn btn-danger btn-round"
-        [routerLink]='["/borrowBook/", book.idBook]'
-        >Preter</a
-      >
       </div>
     </div>
   </div>
@@ -33,23 +28,31 @@
     </mat-toolbar>
     <table class="table table-striped">
       <thead>
-        <tr>
+        <tr class=" small">
           <th scope="col">#</th>
-          <th scope="col">Titre</th>
-          <th scope="col">Genre</th>
-          <th scope="col">Annee</th>
-          <th scope="col">Auteur</th>
+          <th scope="col">Empreinté par</th>
+          <th scope="col">Date d'empeint</th>
+          <th scope="col">Date de retour</th>
+          <th scope="col">Preté par</th>
+          <th scope="col">Rendu</th>
+          <th scope="col">Etat du livre</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let book of Books; let i = index">
+        <tr *ngFor="let pret of prets; let i = index" class="small">
           <td>{{ i + 1 }}</td>
-          <td>{{ book.title }}</td>
-          <td>{{ book.genre }}</td>
-          <td>{{ book.year }}</td>
-          <td>{{ book.author }}</td>
+          <td>{{ pret?.userName }}</td>
+          <td>{{ pret?.borrowDate }}</td>
+          <td>{{ pret?.returnDate }}</td>
+          <td>{{ pret?.nameAdmin }}</td>
+          <td *ngIf="pret?.rendu">Oui</td>
+          <td *ngIf="!pret?.rendu">Non</td>
+          <td>{{ pret?.state }}</td>
         </tr>
       </tbody>
     </table>
+  </div>
+  <div class="col-sm-12">
+    <app-borrow-book *ngIf="borrow" [book]="book" (borrowed)="borrow = false;"></app-borrow-book>
   </div>
 </div>

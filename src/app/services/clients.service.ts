@@ -12,6 +12,7 @@ import { AngularFireStorage } from '@angular/fire/storage';
 })
 export class ClientsService {
   private userCollection: AngularFirestoreCollection;
+  private pretCollection: AngularFirestoreCollection;
   user: Observable<any>;
   picId;
   constructor(
@@ -51,5 +52,12 @@ export class ClientsService {
       });
       console.log(this.picId);
     });
+  }
+  getAllmyBooks(idUser) {
+    this.pretCollection = this.afs.collection('Prets', ref =>
+      ref.where('idUser', '==', idUser)
+    );
+    const prets = this.pretCollection.valueChanges();
+    return prets;
   }
 }

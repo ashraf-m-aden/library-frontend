@@ -5,8 +5,7 @@
       width="40"
       height="30"
       alt="Site logo"
-    /></a
-  >
+  /></a>
   <button
     class="navbar-toggler"
     type="button"
@@ -24,38 +23,75 @@
         <a class="nav-link" [routerLink]="['/clients']">Abonnés</a>
       </li>
       <li class="nav-item list-inline-item">
-        <a class="nav-link" [routerLink]="['/bookDashboard']">Livres</a>
-      </li>
-      <li class="nav-item list-inline-item">
-       <div class="dropdown">
-        <a class="nav-link" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Gestion</a>
-        <div class="dropdown-menu" aria-labelledby="dropdown">
-          <a class="dropdown-item" href="#">Super Admin</a>
-          <a class="dropdown-item" href="#">Admin</a>
-          <a class="dropdown-item" routerLink="/allCDC" >CDC</a>
-          <a class="dropdown-item" routerLink="/genre" >Genre de litteratures</a>
+        <div class="dropdown">
+          <a
+            class="nav-link"
+            id="dropdownMenu2"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+            >Livres</a
+          >
+          <div class="dropdown-menu" aria-labelledby="dropdown">
+            <a class="dropdown-item" routerLink="/bookDashboard" >Tous les livres</a>
+            <a class="dropdown-item" routerLink="/addBook">Ajouter un livre</a>
+            <a class="dropdown-item" routerLink="/borrowedBook">Livres empreintés</a>
+            <a class="dropdown-item" routerLink="/genre"
+            >Genre de litteratures</a
+          >
+          </div>
         </div>
-       </div>
       </li>
       <li class="nav-item list-inline-item">
         <div class="dropdown">
-          <a class="nav-link" [routerLink]="['/bookDashboard']" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Historiques</a>
+          <a
+            class="nav-link"
+            id="dropdownMenu2"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Gestion</a
+          >
           <div class="dropdown-menu" aria-labelledby="dropdown">
-            <a class="dropdown-item" href="#">Pret</a>
-            <a class="dropdown-item" href="#">Retour</a>
-            <a class="dropdown-item" href="#">Ajout</a>
-            <a class="dropdown-item" href="#">Suppression</a>
+            <a class="dropdown-item" >Super Admin</a>
+            <a class="dropdown-item" >Admin</a>
+            <a class="dropdown-item" routerLink="/allCDC">CDC</a>
+           
           </div>
-         </div>      </li>
+        </div>
+      </li>
       <li class="nav-item list-inline-item">
-        <a class="nav-link" [routerLink]="['/bookDashboard']">Statistiques</a>
+        <div class="dropdown">
+          <a
+            class="nav-link"
+            id="dropdownMenu2"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Historiques</a
+          >
+          <div class="dropdown-menu" aria-labelledby="dropdown">
+            <a class="dropdown-item" >Pret</a>
+            <a class="dropdown-item" >Retour</a>
+            <a class="dropdown-item" >Ajout</a>
+            <a class="dropdown-item" >Suppression</a>
+          </div>
+        </div>
+      </li>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link">Statistiques</a>
       </li>
     </ul>
     <div class="filler"></div>
     <ul class="navbar-nav list-inline">
       <li class="nav-item list-inline-item">
+        <a class="nav-link">Notifications</a>
+      </li>
+      <li class="nav-item list-inline-item">
+        <a class="nav-link">Connexion</a>
+      </li><li class="nav-item list-inline-item">
         <a class="nav-link">Deconnexion</a>
       </li>
     </ul>

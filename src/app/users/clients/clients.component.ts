@@ -15,6 +15,7 @@ export class ClientsComponent implements OnInit {
   searchForm: FormGroup;
   searchResults = false;
   displayedColumns = ['name', 'age', 'genre', 'Action'];
+  errorMessage = false;
   Users = [];
   datasource;
   length;
@@ -44,19 +45,29 @@ export class ClientsComponent implements OnInit {
   }
   search() {
     this.Users = [];
-    const letter = this.searchForm.get('letter').value;
+    const letter = this.searchForm.get('letter').value.toLowerCase().trim();
+    if (letter === '') {
+      this.errorMessage = true;
+    } else {
     this.userS.getClients().subscribe(data => {
       data.forEach(user => {
-        if ((user.name).toLowerCase().includes(letter.toLowerCase())) {
+        if ((user.name).toLowerCase().includes(letter)) {
           this.Users.push(user);
           this.searchResults = true;
         }
       });
+      if (this.Users.length === 0) {
+        this.errorMessage = true;
+      }
     });
+  }
   }
   initForm() {
     this.searchForm = this.formBuilder.group({
       letter: ['', [Validators.required]]
     });
+    this.Users = [];
+    this.searchResults = false;
+    this.errorMessage = false;
   }
 }

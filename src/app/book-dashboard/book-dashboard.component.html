@@ -39,7 +39,7 @@
             <input
               class="form-control"
               formControlName="letter"
-              type="search"
+              type="text"
               placeholder="Rechercher un livre"
               aria-label="Rechercher"
             />
@@ -54,12 +54,13 @@
             <button
               class="btn btn-outline-danger"
               [disabled]="searchForm.invalid"
-              (click)="Books = []"
+              (click)="initForm()"
             >
               Effacer
             </button>
           </form>
-          <div v-if="searchResults">
+          <button class="btn btn-group btn-danger" *ngIf="errorMessage">Aucun livre trouvé</button>
+          <div *ngIf="searchResults">
             <mat-nav-list>
               <mat-list-item *ngFor="let book of Books">
                 <table>
