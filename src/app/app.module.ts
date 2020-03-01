@@ -1,3 +1,4 @@
+import { NotificationsService } from './services/notifications.service';
 import { CdcService } from './services/cdc.service';
 import { Dialog } from './users/add-user/add-user.component';
 import { BooksService } from './services/books.service';
@@ -22,12 +23,11 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { GestionModule } from './gestion/gestion.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
-import { BorrowBookComponent } from './book-dashboard/borrow-book/borrow-book.component';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
   entryComponents: [Dialog],
-  declarations: [AppComponent, components, Dialog, BorrowBookComponent],
+  declarations: [AppComponent, components],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserModule,
@@ -44,7 +44,7 @@ import { environment } from 'src/environments/environment';
     CarouselModule
   ],
   schemas: [NO_ERRORS_SCHEMA],
-  providers: [ClientsService, BooksService, CdcService  ],
+  providers: [ClientsService, BooksService, CdcService, NotificationsService  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

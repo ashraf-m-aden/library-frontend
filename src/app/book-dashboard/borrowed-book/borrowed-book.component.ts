@@ -41,15 +41,21 @@ export class BorrowedBookComponent implements OnInit {
       .toLowerCase();
     if (letter === '') {
       this.errorMessage = true;
+      this.searchResults = false;
+
     } else {
       this.Prets.forEach(pret => {
         if (pret.title.toLowerCase().includes(letter)) {
           this.searchPrets.push(pret);
           this.searchResults = true;
+          this.errorMessage = false;
+
         }
       });
       if (this.searchPrets.length === 0) {
         this.errorMessage = true;
+        this.searchResults = false;
+
       }
     }
   }

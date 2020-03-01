@@ -1,37 +1,36 @@
 <div class="row">
-  <div
-    class="col-sm-12 col-md-2 position-sticky"
-    style="background: linear-gradient(#eceef1, #9e8652, transparent), url('../../assets/img/bg.jpg') no-repeat center;"
-  >
-    <div class="p-4 navbar-dark">
-     <div class="sidenav">
-       <div  (click)="displayAll()" >
-        <mat-card
-        class=" btn-outline-secondary menu"
+  <div class="col-sm-12 col-md-2 card bg-dark text-light" style="margin-top: 10px;">
+    <h5 type="button" class="card-header" (click)="displayAll()">
+      Tous les livres
+    </h5>
+    <div class="dropdown-divider"></div>
+    <ul class="list-group">
+      <li
+        type="button"
+        class=" list-group-item bg-dark btn-outline-danger text-light"
+        *ngFor="let genre of genres"
+        (click)="display(genre)"
       >
-        Tous les genres
-      </mat-card>       </div>
-      <div *ngFor="let genre of genres">
-        <mat-card
-          class=" btn-outline-secondary menu"
-          (click)="display(genre)"
-        >
-          {{ genre.name }}
-        </mat-card>
-      </div>
-     </div>
-    </div>
+        {{ genre.name }}
+      </li>
+    </ul>
   </div>
   <div class="col-sm-12 col-md-10">
     <div *ngIf="allBooks" class="row">
       <div class="col-sm-12 col-md-12">
         <div class="card">
-          <h1 class="card-header">Livres</h1>
+          <h4 class="card-header bg-dark text-light">Livres</h4>
           <div class="card-body menuB">
-            <button class="btn btn-outline-success " routerLink="/addBook">
+            <button
+              class="btn  mat-raised-button btn-success "
+              routerLink="/addBook"
+            >
               Ajouter un livre
             </button>
-            <button class="btn btn-outline-danger" routerLink="/borrowedBook">
+            <button
+              class="btn  mat-raised-button btn-outline-danger"
+              routerLink="/borrowedBook"
+            >
               Livres empreintés
             </button>
           </div>
@@ -59,27 +58,33 @@
               Effacer
             </button>
           </form>
-          <button class="btn btn-group btn-danger" *ngIf="errorMessage">Aucun livre trouvé</button>
+          <button class="btn btn-group btn-danger" *ngIf="errorMessage">
+            Aucun livre trouvé
+          </button>
           <div *ngIf="searchResults">
-            <mat-nav-list>
-              <mat-list-item *ngFor="let book of Books">
-                <table>
-                  <tr>
-                    <td>
-                      <span>{{ book.title }}</span>
-                    </td>
-                    <td>
-                      <button
-                        (click)="details(book.idBook)"
-                        class="btn btn-group btn-outline-primary"
-                      >
-                        Consulter
-                      </button>
-                    </td>
-                  </tr>
-                </table>
-              </mat-list-item>
-            </mat-nav-list>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Nom</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let book of Books; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ book.title }}</td>
+                  <td>
+                    <button
+                      (click)="details(book.idBook)"
+                      class="btn btn-group btn-outline-primary"
+                    >
+                      Consulter
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="col-sm-12 col-md-12" *ngIf="search">
             <mat-paginator

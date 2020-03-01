@@ -14,6 +14,7 @@ export interface PeriodicElement {
   styleUrls: ['./client.component.scss']
 })
 export class ClientComponent {
+  message = false;
   id; // idUser
   User; // user Data
   public pieChartLabels = [];
@@ -42,6 +43,7 @@ export class ClientComponent {
             author: results[0].author,
             genre: results[0].genre,
             returnDate: pret.returnDate,
+            rendu: pret.rendu,
             borrowDate: pret.borrowDate
           });
         });

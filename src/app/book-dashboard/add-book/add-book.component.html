@@ -1,13 +1,10 @@
 <div class="row">
   <div class="col-md-8">
     <div class="card">
-      <div class="card-header card-header-danger">
-        <h4 class="card-title">Livre</h4>
-        <p class="card-category">Ajout d'un nouveau livre</p>
+        <h4 class="card-title card-header bg-dark text-light">Ajouter un livre</h4>
       </div>
     </div>
   </div>
-</div>
 <div class="row">
   <div class="col-md-8">
     <div class="card">
@@ -45,28 +42,30 @@
             <mat-form-field class="example-full-width">
               <mat-select matInput formControlName="genre" name="Genre" id="genre">
                 <mat-option *ngFor="let genre of genres" [value]="genre.name">{{genre.name}}</mat-option>
-              </mat-select>
+              </mat-select >
             </mat-form-field>
+            <div class="form-group" id="pic">
+              <label for="file" class="disappear">Ajouter une photo</label>
+              <input
+                type="file"
+                class="disappear"
+                (change)="upload($event)"
+                accept=".png,.jpg"
+              />
+            </div>
+    
+            <button
+              mat-raised-button
+              type="submit"
+              class="btn btn-danger pull-right"
+              [disabled]="bookForm.invalid"
+              class=" center"
+            >
+              Ajouter le livre
+            </button>
           </div>
         </div>
-        <div class="form-group" id="pic">
-          <label for="file" class="disappear">Ajouter une photo</label>
-          <input
-            type="file"
-            class="disappear"
-            (change)="upload($event)"
-            accept=".png,.jpg"
-          />
-        </div>
-
-        <button
-          mat-raised-button
-          type="submit"
-          class="btn btn-danger pull-right"
-          [disabled]="bookForm.invalid"
-        >
-          Ajouter le livre
-        </button>
+        
         <div class="clearfix"></div>
       </form>
     </div>

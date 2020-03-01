@@ -12,6 +12,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ClientsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  sms = true;
+  mail = false;
   searchForm: FormGroup;
   searchResults = false;
   displayedColumns = ['name', 'age', 'genre', 'Action'];
@@ -33,6 +35,14 @@ export class ClientsComponent implements OnInit {
       this.datasource.paginator = this.paginator;
     });
   }
+  showSms() {
+    this.sms = true;
+    this.mail = false;
+  }
+  showMail() {
+    this.sms = false;
+    this.mail = true;
+  }
   details(idUser) {
     this.route.navigate(['/client/', idUser]);
   }
@@ -45,22 +55,26 @@ export class ClientsComponent implements OnInit {
   }
   search() {
     this.Users = [];
-    const letter = this.searchForm.get('letter').value.toLowerCase().trim();
+    const letter = this.searchForm
+      .get('letter')
+      .value.toLowerCase()
+      .trim();
     if (letter === '') {
       this.errorMessage = true;
     } else {
-    this.userS.getClients().subscribe(data => {
-      data.forEach(user => {
-        if ((user.name).toLowerCase().includes(letter)) {
-          this.Users.push(user);
-          this.searchResults = true;
+      this.userS.getClients().subscribe(data => {
+        data.forEach(user => {
+          if (user.name.toLowerCase().includes(letter)) {
+            this.Users.push(user);
+            this.searchResults = true;
+            this.errorMessage = false;
+          }
+        });
+        if (this.Users.length === 0) {
+          this.errorMessage = true;
         }
       });
-      if (this.Users.length === 0) {
-        this.errorMessage = true;
-      }
-    });
-  }
+    }
   }
   initForm() {
     this.searchForm = this.formBuilder.group({

@@ -56,11 +56,13 @@ export class BookDashboardComponent implements OnInit {
     if (letter === '') {
       this.errorMessage = true;
     } else {
-      this.bookS.getBooks().subscribe(data => {
-        data.forEach(book => {
+      this.bookS.getBooks().subscribe( data => {
+        data.forEach(async book => {
           if (book.title.toLowerCase().includes(letter.toLowerCase())) {
-            this.Books.push(book);
+            await this.Books.push(book);
             this.searchResults = true;
+            this.errorMessage = false;
+
           }
         });
       });

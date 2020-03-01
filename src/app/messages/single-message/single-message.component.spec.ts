@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NotifsComponent } from './notifs.component';
+import { SingleMessageComponent } from './single-message.component';
 
-describe('NotifsComponent', () => {
-  let component: NotifsComponent;
-  let fixture: ComponentFixture<NotifsComponent>;
+describe('SingleMessageComponent', () => {
+  let component: SingleMessageComponent;
+  let fixture: ComponentFixture<SingleMessageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ NotifsComponent ]
+      declarations: [ SingleMessageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotifsComponent);
+    fixture = TestBed.createComponent(SingleMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

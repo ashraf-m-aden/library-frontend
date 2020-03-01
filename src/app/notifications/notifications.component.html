@@ -1,0 +1,58 @@
+<div class="col-sm-12 col-md-12">
+  <mat-toolbar class=" card-header bg-dark text-light">
+    Notifications  </mat-toolbar>  
+  <mat-paginator
+      [length]="length"
+      [pageSize]="pageSize"
+      [pageSizeOptions]="pageSizeOptions"
+      showFirstLastButtons
+    >
+    </mat-paginator>
+    <div class="example-container mat-elevation-z8">
+      <mat-table [dataSource]="datasource" matSort>
+        <!-- ID Column -->
+        <ng-container matColumnDef="title">
+          <mat-header-cell class=" bg-danger text-light" *matHeaderCellDef mat-sort-header >
+            Titre
+          </mat-header-cell>
+          <mat-cell class=" bg-warning" *matCellDef="let row"> {{ row?.title }} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="name">
+          <mat-header-cell class=" bg-danger text-light" *matHeaderCellDef mat-sort-header>
+            Nom de l'abonné
+          </mat-header-cell>
+          <mat-cell class=" bg-warning" *matCellDef="let row"> {{ row?.userName }} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="returnDate">
+          <mat-header-cell class=" bg-danger text-light" *matHeaderCellDef mat-sort-header>
+            Date de retour
+          </mat-header-cell>
+          <mat-cell class=" bg-warning" *matCellDef="let row"> {{ row?.returnDate }} </mat-cell>
+        </ng-container>
+        <!-- action Column -->
+        <ng-container matColumnDef="Action">
+          <mat-header-cell class=" bg-danger text-light" *matHeaderCellDef mat-sort-header>
+            Consulter l'abonné
+          </mat-header-cell>
+          <mat-cell class=" bg-warning" *matCellDef="let row">
+            <button
+              [routerLink]="['/client', row?.idUser]"
+              class="btn btn-outline-danger"
+            >
+              Consulter
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row
+          *matHeaderRowDef="displayedColumns"
+        ></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns">
+        </mat-row>
+      </mat-table>
+    </div>
+  </div>

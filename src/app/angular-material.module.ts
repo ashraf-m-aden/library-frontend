@@ -21,11 +21,13 @@ import {
 } from '@angular/material';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import {MatBadgeModule} from '@angular/material/badge';
 
 @NgModule({
   declarations: [],
   imports: [CommonModule],
   exports: [
+    MatBadgeModule,
     MatSidenavModule,
     MatIconModule,
     MatTabsModule,

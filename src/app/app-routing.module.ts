@@ -1,7 +1,8 @@
+import { NotificationsComponent } from './notifications/notifications.component';
+import { MessagesComponent } from './messages/messages/messages.component';
+import { SingleMessageComponent } from './messages/single-message/single-message.component';
 import { BorrowBookComponent } from './book-dashboard/borrow-book/borrow-book.component';
 import { GlobalStatsComponent } from './statistic/global-stats/global-stats.component';
-import { NotifsComponent } from './notification/notifs/notifs.component';
-import { SingleNotifComponent } from './notification/single-notif/single-notif.component';
 import { ClientsComponent } from './users/clients/clients.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AddUserComponent, Dialog } from './users/add-user/add-user.component';
@@ -35,10 +36,10 @@ export const routes: Routes = [
     path: 'client/:id', component: ClientComponent, pathMatch: 'full'
   },
   {
-    path: 'singleNotif', component: SingleNotifComponent, pathMatch: 'full'
+    path: 'singleMessage', component: SingleMessageComponent, pathMatch: 'full'
   },
   {
-    path: 'notifs', component: NotifsComponent, pathMatch: 'full'
+    path: 'messages', component: MessagesComponent, pathMatch: 'full'
   }
   ,
   {
@@ -66,6 +67,9 @@ export const routes: Routes = [
     path: 'borrowBook/:id', component: BorrowBookComponent, pathMatch: 'full'
   },
   {
+    path: 'notification', component: NotificationsComponent, pathMatch: 'full'
+  },
+  {
     path: 'allCDC',
     loadChildren: './gestion/gestion.module#GestionModule'
   },
@@ -73,9 +77,9 @@ export const routes: Routes = [
 
 export const components = [
   AddUserComponent, DashboardComponent, ClientsComponent, ClientComponent,
-  SingleNotifComponent, NotifsComponent, GlobalStatsComponent, Dialog,   BorrowedBookComponent,
-  BookDashboardComponent,
-  BookComponent, HeaderComponent,
+  NotificationsComponent , GlobalStatsComponent, Dialog,   BorrowedBookComponent,
+  BookDashboardComponent, SingleMessageComponent,
+  BookComponent, HeaderComponent, BorrowBookComponent,
   AddBookComponent,
   LivresComponent
 ];

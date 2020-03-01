@@ -22,13 +22,14 @@ export class BookComponent implements OnInit {
       this.id = params.id;
       bookS.getBook(this.id).subscribe((data: any) => {
         this.book = data[0];
-        this.bookS.getPretBook(this.book.idBook).subscribe(
-          results => this.prets = results
-        );
-
+        this.bookS
+          .getPretBook(this.book.idBook)
+          .subscribe(results => (this.prets = results));
       });
     });
   }
-
+  borrowBook() {
+    this.borrow = true;
+  }
   ngOnInit() {}
 }

@@ -17,15 +17,15 @@
   <div class="collapse navbar-collapse" id="navbarContent">
     <ul class="navbar-nav list-inline">
       <li class="nav-item active list-inline-item">
-        <a class="nav-link" [routerLink]="['/dashboard']">Acceuil</a>
+        <a class="nav-link text-light" [routerLink]="['/dashboard']">Acceuil</a>
       </li>
       <li class="nav-item list-inline-item">
-        <a class="nav-link" [routerLink]="['/clients']">Abonnés</a>
+        <a class="nav-link text-light" [routerLink]="['/clients']">Abonnés</a>
       </li>
       <li class="nav-item list-inline-item">
         <div class="dropdown">
           <a
-            class="nav-link"
+            class="nav-link text-light"
             id="dropdownMenu2"
             data-toggle="dropdown"
             aria-haspopup="true"
@@ -45,7 +45,7 @@
       <li class="nav-item list-inline-item">
         <div class="dropdown">
           <a
-            class="nav-link"
+            class="nav-link text-light"
             id="dropdownMenu2"
             data-toggle="dropdown"
             aria-haspopup="true"
@@ -64,7 +64,7 @@
       <li class="nav-item list-inline-item">
         <div class="dropdown">
           <a
-            class="nav-link"
+            class="nav-link text-light"
             id="dropdownMenu2"
             data-toggle="dropdown"
             aria-haspopup="true"
@@ -81,18 +81,21 @@
         </div>
       </li>
       <li class="nav-item list-inline-item">
-        <a class="nav-link">Statistiques</a>
+        <a class="nav-link text-light">Statistiques</a>
       </li>
     </ul>
     <div class="filler"></div>
     <ul class="navbar-nav list-inline">
       <li class="nav-item list-inline-item">
-        <a class="nav-link">Notifications</a>
+      <div matBadgeOverlap="true" matBadgePosition="above after" [matBadge]="matBadge" [matBadgeHidden]="matBadge == 0" routerLink="/notification" matBadgeColor="warn">
+        <img  src="../../assets/img/bell.png"
+        style="height: 30px; width: 30px;">
+      </div>
       </li>
       <li class="nav-item list-inline-item">
-        <a class="nav-link">Connexion</a>
+        <a class="nav-link text-light">Connexion</a>
       </li><li class="nav-item list-inline-item">
-        <a class="nav-link">Deconnexion</a>
+        <a class="nav-link text-light">Deconnexion</a>
       </li>
     </ul>
   </div>
