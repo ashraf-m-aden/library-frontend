@@ -35,26 +35,24 @@ export class BorrowedBookComponent implements OnInit {
   }
   search() {
     this.searchPrets = [];
+    this.searchResults = false;
     const letter = this.searchForm
       .get('letter')
       .value.trim()
       .toLowerCase();
     if (letter === '') {
       this.errorMessage = true;
-      this.searchResults = false;
 
     } else {
-      this.Prets.forEach(pret => {
+      this.Prets.forEach(async pret => {
         if (pret.title.toLowerCase().includes(letter)) {
-          this.searchPrets.push(pret);
-          this.searchResults = true;
-          this.errorMessage = false;
+         await this.searchPrets.push(pret);
+         this.searchResults = true;
 
         }
       });
       if (this.searchPrets.length === 0) {
         this.errorMessage = true;
-        this.searchResults = false;
 
       }
     }

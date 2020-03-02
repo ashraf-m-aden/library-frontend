@@ -56,12 +56,12 @@ export class ClientComponent {
     this.bookS.getGenres().subscribe(data => {
       data.forEach(genre => {
         cnt = 0;
-        this.pieChartLabels.push(genre.name);
         this.myBooks.forEach(book => {
           if (book.genre === genre.name) {
             cnt += 1;
           }
         });
+        this.pieChartLabels.push(genre.name);
         this.pieChartData.push(cnt);
       });
     });

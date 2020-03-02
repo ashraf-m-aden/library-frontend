@@ -44,8 +44,8 @@
           <td>{{ pret?.borrowDate }}</td>
           <td>{{ pret?.returnDate }}</td>
           <td>{{ pret?.nameAdmin }}</td>
-          <td *ngIf="pret?.rendu">Oui</td>
-          <td *ngIf="!pret?.rendu">Non</td>
+          <td *ngIf="pret?.rendu" class=" bg-success text-light">Oui</td>
+          <td *ngIf="!pret?.rendu" class=" bg-danger text-light">Non</td>
           <td>{{ pret?.state }}</td>
         </tr>
       </tbody>

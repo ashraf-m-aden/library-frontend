@@ -1,25 +1,44 @@
 <div class="row">
-    <div class="col-sm-12"   >
-                <div class="d-flex sm">
-                  <button class="btn btn-outline-success" (click)="showSms()" >Envoyer un message</button>
-                  <button class="btn btn-outline-primary" (click)="showMail()">Envoyer un mail</button>
-                </div>
+  <div class="col-sm-12">
+    <div class="d-flex sm">
+      <button class="btn btn-outline-success" (click)="showSms()">
+        Envoyer un message
+      </button>
+      <button class="btn btn-outline-primary" (click)="showMail()">
+        Envoyer un mail
+      </button>
     </div>
-          <div class="col-md-6 col-sm-12">
-            <form *ngIf="mail">      
-              <mat-form-field class="example-full-width">
-                <textarea matInput placeholder="Ecrivez votre mail" type="text" name="" id="" cols="5" rows="5"></textarea>
-              </mat-form-field> 
-              <button class=" btn btn-primary mat-raised-button">envoyer le mail</button>   
-            </form>
-            <form *ngIf="sms">        
-              <mat-form-field class="example-full-width">
-                <textarea matInput placeholder="Ecrivez votre sms" type="text" name="" id="" cols="5" rows="5"></textarea>
-              </mat-form-field> 
-              <button class="btn btn-success mat-raised-button">envoyer le sms</button>   
-  
-            </form>
-          </div>
-          
-        </div>
-        
+  </div>
+  <div class="col-md-6 col-sm-12">
+    <form *ngIf="mail">
+      <mat-form-field class="form-group">
+        <textarea
+          matInput
+          placeholder="Ecrivez votre mail"
+          type="text"
+          name=""
+          id=""
+          cols="5"
+          rows="5"
+        ></textarea>
+      </mat-form-field>
+      <button class=" btn btn-primary mat-raised-button">
+        envoyer le mail
+      </button>
+    </form>
+    <form *ngIf="sms">
+      <mat-form-field class="form-group">
+        <textarea
+          matInput
+          placeholder="Ecrivez votre sms"
+          type="text"
+          name=""
+          id=""
+          cols="5"
+          rows="5"
+        ></textarea>
+      </mat-form-field>
+      <button class="btn btn-success mat-raised-button">envoyer le sms</button>
+    </form>
+  </div>
+</div>

@@ -76,19 +76,20 @@ export class BorrowBookComponent implements OnInit {
   }
   search() {
     this.Users = [];
+    this.searchResults = false;
     this.selected = false;
     const letter = this.searchForm
       .get('letter')
-      .value.trim()
-      .toLowerCase();
+      .value.toLowerCase().trim()
+      ;
     if (letter === '') {
       this.errorMessage = true;
     } else {
       this.userS.getClients().subscribe(data => {
-        data.forEach(user => {
+        data.forEach(async user => {
           if (user.name.toLowerCase().includes(letter)) {
-            this.Users.push(user);
-            this.searchResults = true;
+           await this.Users.push(user);
+           this.searchResults = true;
           }
         });
         if (this.Users.length === 0) {

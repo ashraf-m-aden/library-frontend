@@ -76,19 +76,23 @@
                 </tbody>
               </table>
             </div>
-            <button class="btn btn-group btn-danger" *ngIf="errorMessage">Cet utilisateur n'existe pas</button>
+            <button class="btn btn-group btn-danger" *ngIf="errorMessage">
+              Cet utilisateur n'existe pas
+            </button>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <mat-form-field>
+              <mat-form-field class="form-group">
                 <input
                   matInput
                   placeholder="Choisir la date de retour"
                   [matDatepicker]="picker"
                   formControlName="returnDate"
-                  matInput [min]="minDate" [max]="maxDate"
+                  matInput
+                  [min]="minDate"
+                  [max]="maxDate"
                   readonly
                 />
                 <mat-datepicker-toggle
@@ -97,19 +101,18 @@
                 ></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
-              <button class="btn btn-group btn-danger" *ngIf="errorDate">Date incorrect</button>
-
+              <button class="btn btn-group btn-danger" *ngIf="errorDate">
+                Date incorrect
+              </button>
             </div>
             <div class="form-group">
-              <mat-form-field>
+              <mat-form-field class="form-group">
                 <mat-label>Faire une description de l'etat du livre</mat-label>
-                <input
-                  matInput
-                  formControlName="state"                  
-                />
+                <input matInput formControlName="state" />
               </mat-form-field>
-              <button class="btn btn-group btn-danger" *ngIf="errorDate">Date incorrect</button>
-
+              <button class="btn btn-group btn-danger" *ngIf="errorDate">
+                Date incorrect
+              </button>
             </div>
             <button
               mat-raised-button

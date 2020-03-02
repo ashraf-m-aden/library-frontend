@@ -44,6 +44,7 @@ export class AllCDCComponent implements OnInit {
   }
   search() {
     this.Cdcs = [];
+    this.searchResults = false;
     const letter = this.searchForm
       .get('letter')
       .value.toLowerCase()
@@ -52,9 +53,9 @@ export class AllCDCComponent implements OnInit {
       this.errorMessage = true;
     } else {
       this.cdcS.getCdcs().subscribe(data => {
-        data.forEach(cdc => {
+        data.forEach(async cdc => {
           if (cdc.name.toLowerCase().includes(letter)) {
-            this.Cdcs.push(cdc);
+            await this.Cdcs.push(cdc);
             this.searchResults = true;
           }
         });

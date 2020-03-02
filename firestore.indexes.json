@@ -1,0 +1,19 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "Prets",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "rendu",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "returnDate",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ],
+  "fieldOverrides": []
+}

@@ -1,37 +1,50 @@
 <div class="row">
   <div class="col-md-8">
     <div class="card">
-        <h4 class="card-title card-header bg-dark text-light">Ajouter un livre</h4>
-      </div>
+      <h4 class="card-title card-header bg-dark text-light">
+        Ajouter un livre
+      </h4>
     </div>
   </div>
+</div>
 <div class="row">
   <div class="col-md-8">
     <div class="card">
-      <form [formGroup]="bookForm" (ngSubmit)="onSubmit()" >
+      <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="col-md-6 form-group">
-            <mat-form-field class="example-full-width">
+              <mat-form-field>
               <input matInput formControlName="title" placeholder="Titre" />
             </mat-form-field>
+              
           </div>
           <div class="col-md-4 form-group">
-            <mat-form-field class="example-full-width">
+              <mat-form-field>
               <input matInput formControlName="author" placeholder="Auteur" />
             </mat-form-field>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 form-group">
-            <mat-form-field class="example-full-width">
-              <input matInput formControlName="year" placeholder="Année" type="number" />
+              <mat-form-field>
+              <input
+                matInput
+                formControlName="year"
+                placeholder="Année"
+                type="number"
+              />
             </mat-form-field>
           </div>
         </div>
         <div class="row">
           <div class="col-md-12 form-group">
-            <mat-form-field class="example-full-width">
-              <input matInput formControlName="sNumber" placeholder="Numero de serie" type="number" />
+              <mat-form-field>
+              <input
+                matInput
+                formControlName="sNumber"
+                placeholder="Numero de serie"
+                type="number"
+              />
             </mat-form-field>
           </div>
         </div>
@@ -39,10 +52,17 @@
         <div class="row">
           <div class="col-md-12 form-group">
             <label>Genre</label>
-            <mat-form-field class="example-full-width">
-              <mat-select matInput formControlName="genre" name="Genre" id="genre">
-                <mat-option *ngFor="let genre of genres" [value]="genre.name">{{genre.name}}</mat-option>
-              </mat-select >
+              <mat-form-field>
+              <mat-select
+                matInput
+                formControlName="genre"
+                name="Genre"
+                id="genre"
+              >
+                <mat-option *ngFor="let genre of genres" [value]="genre.name">{{
+                  genre.name
+                }}</mat-option>
+              </mat-select>
             </mat-form-field>
             <div class="form-group" id="pic">
               <label for="file" class="disappear">Ajouter une photo</label>
@@ -53,7 +73,7 @@
                 accept=".png,.jpg"
               />
             </div>
-    
+
             <button
               mat-raised-button
               type="submit"
@@ -65,7 +85,7 @@
             </button>
           </div>
         </div>
-        
+
         <div class="clearfix"></div>
       </form>
     </div>

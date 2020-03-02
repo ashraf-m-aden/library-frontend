@@ -1,12 +1,12 @@
 <div class="col-md-8">
   <div class="card">
-      <h4 class="card-header text-light bg-dark">Ajouter un abonné</h4>
+    <h4 class="card-header text-light bg-dark">Ajouter un abonné</h4>
     <div class="card-body">
       <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="form-group">
                 <input
                   matInput
                   formControlName="name"
@@ -18,7 +18,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="form-group">
                 <input
                   matInput
                   formControlName="email"
@@ -32,7 +32,7 @@
         <div class="row">
           <div class="col-md-6">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="form-group">
                 <input
                   matInput
                   formControlName="age"
@@ -44,7 +44,7 @@
           </div>
           <div class="col-md-6">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="form-group">
                 <input
                   matInput
                   formControlName="address"
@@ -58,7 +58,7 @@
         <div class="row">
           <div class="col-md-12">
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="form-group">
                 <input
                   matInput
                   formControlName="number"
@@ -74,7 +74,7 @@
           <div class="col-md-12">
             <label>Genre</label>
             <div class="form-group">
-              <mat-form-field class="example-full-width">
+              <mat-form-field class="form-group">
                 <mat-select
                   matInput
                   formControlName="genre"
@@ -103,6 +103,8 @@
           mat-raised-button
           type="submit"
           class="btn btn-danger pull-right"
+          [disabled]="userForm.invalid"
+
         >
           Ajouter l'abonné
         </button>

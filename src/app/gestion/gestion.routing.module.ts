@@ -1,3 +1,4 @@
+import { DashboardComponent } from './../dashboard/dashboard.component';
 import { AddCDCComponent } from './cdc/add-cdc/add-cdc.component';
 
 import { NgModule } from '@angular/core';
@@ -8,26 +9,40 @@ import { GenreComponent } from './genre/genre.component';
 
 export const routesG: Routes = [
   {
-    path: '', redirectTo: '/bookDashboard', pathMatch: 'full'
+    path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
   },
   {
-    path: 'allCDC', component: AllCDCComponent, pathMatch: 'full'
-  }, {
-    path: 'addCDC', component: AddCDCComponent, pathMatch: 'full'
+    path: 'dashboard',
+    component: DashboardComponent,
+    pathMatch: 'full'
   },
   {
-    path: 'cdc/:id', component: CdcComponent, pathMatch: 'full'
+    path: 'allCDC',
+    component: AllCDCComponent,
+    pathMatch: 'full'
   },
   {
-    path: 'genre', component: GenreComponent, pathMatch: 'full'
+    path: 'addCDC',
+    component: AddCDCComponent,
+    pathMatch: 'full'
   },
+  {
+    path: 'cdc/:id',
+    component: CdcComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'genre',
+    component: GenreComponent,
+    pathMatch: 'full'
+  }
 ];
 
-export const components = [
-
-];
+export const components = [];
 @NgModule({
   imports: [RouterModule],
   exports: [RouterModule]
 })
-export class GestionRoutingModule { }
+export class GestionRoutingModule {}

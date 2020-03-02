@@ -58,7 +58,7 @@
               Effacer
             </button>
           </form>
-          <button class="btn btn-group btn-danger" *ngIf="errorMessage">
+          <button class="btn btn-group btn-danger" *ngIf="errorMessage && !searchResults">
             Aucun livre trouvé
           </button>
           <div *ngIf="searchResults">

@@ -46,9 +46,6 @@ export const routes: Routes = [
     path: 'GS', component: GlobalStatsComponent, pathMatch: 'full'
   },
   {
-    path: 'livres', component: BookDashboardComponent, pathMatch: 'full'
-  },
-  {
     path: 'type/:id', component: LivresComponent, pathMatch: 'full'
   },
   {
@@ -79,7 +76,7 @@ export const components = [
   AddUserComponent, DashboardComponent, ClientsComponent, ClientComponent,
   NotificationsComponent , GlobalStatsComponent, Dialog,   BorrowedBookComponent,
   BookDashboardComponent, SingleMessageComponent,
-  BookComponent, HeaderComponent, BorrowBookComponent,
+  BookComponent, HeaderComponent, BorrowBookComponent, MessagesComponent,
   AddBookComponent,
   LivresComponent
 ];

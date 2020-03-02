@@ -49,6 +49,7 @@ export class BookDashboardComponent implements OnInit {
   }
   search() {
     this.Books = [];
+    this.searchResults = false;
     const letter = this.searchForm
       .get('letter')
       .value.toLowerCase()

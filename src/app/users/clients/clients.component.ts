@@ -55,6 +55,7 @@ export class ClientsComponent implements OnInit {
   }
   search() {
     this.Users = [];
+    this.searchResults = false;
     const letter = this.searchForm
       .get('letter')
       .value.toLowerCase()
@@ -63,11 +64,10 @@ export class ClientsComponent implements OnInit {
       this.errorMessage = true;
     } else {
       this.userS.getClients().subscribe(data => {
-        data.forEach(user => {
+        data.forEach(async user => {
           if (user.name.toLowerCase().includes(letter)) {
-            this.Users.push(user);
+            await this.Users.push(user);
             this.searchResults = true;
-            this.errorMessage = false;
           }
         });
         if (this.Users.length === 0) {
