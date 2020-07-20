@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import * as L from 'leaflet';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements AfterViewInit {
+  private map;
   multi = [
     {
       name: 'Roman',
@@ -99,7 +101,24 @@ export class DashboardComponent {
   constructor() {
     Object.assign(this, { this: this.multi });
   }
+  ngAfterViewInit(): void {
+    this.initMap();
+  }
 
+  private initMap(): void {
+    this.map = L.map('map', {
+      center: [11.644394, 43.120824],
+      zoom: 9
+    });
+    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    });
+
+    tiles.addTo(this.map);
+    L.marker([11.56, 43.10]).addTo(this.map)
+      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.');
+  }
   onSelect(data): void {
     console.log('Item clicked', JSON.parse(JSON.stringify(data)));
   }

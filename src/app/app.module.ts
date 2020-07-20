@@ -24,10 +24,11 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 import { GestionModule } from './gestion/gestion.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { environment } from 'src/environments/environment';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   entryComponents: [Dialog],
-  declarations: [AppComponent, components],
+  declarations: [AppComponent, components, MapComponent],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserModule,

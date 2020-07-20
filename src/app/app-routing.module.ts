@@ -1,3 +1,4 @@
+import { MapComponent } from './map/map.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { MessagesComponent } from './messages/messages/messages.component';
 import { SingleMessageComponent } from './messages/single-message/single-message.component';
@@ -18,10 +19,13 @@ import { HeaderComponent } from './header/header.component';
 
 export const routes: Routes = [
   {
-    path: '', redirectTo: '/dashboard', pathMatch: 'full'
+    path: '', redirectTo: '/map', pathMatch: 'full'
+  },
+   {
+    path: '*', redirectTo: '/map', pathMatch: 'full'
   },
   {
-    path: '*', redirectTo: '/dashboard', pathMatch: 'full'
+    path: 'map', component: MapComponent, pathMatch: 'full'
   },
   {
     path: 'dashboard', component: DashboardComponent, pathMatch: 'full'
@@ -77,7 +81,7 @@ export const components = [
   NotificationsComponent , GlobalStatsComponent, Dialog,   BorrowedBookComponent,
   BookDashboardComponent, SingleMessageComponent,
   BookComponent, HeaderComponent, BorrowBookComponent, MessagesComponent,
-  AddBookComponent,
+  AddBookComponent, MapComponent,
   LivresComponent
 ];
 @NgModule({
