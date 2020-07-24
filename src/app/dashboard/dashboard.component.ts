@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { Component, ElementRef, AfterViewInit, Directive, HostListener } from '@angular/core';
 
 @Component({
@@ -96,8 +97,10 @@ export class DashboardComponent {
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
-  constructor( private elementRef: ElementRef) {
+  constructor( private elementRef: ElementRef, private router:Router) {
     Object.assign(this, { this: this.multi });
+    console.log(this.router.url);
+
 
   }
 

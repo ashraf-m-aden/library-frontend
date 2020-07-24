@@ -25,7 +25,6 @@ import { GestionModule } from './gestion/gestion.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { environment } from 'src/environments/environment';
 import { MapComponent } from './map/map.component';
-import { ButtonComponent } from './map/button/button.component';
 
 @NgModule({
   entryComponents: [Dialog],
