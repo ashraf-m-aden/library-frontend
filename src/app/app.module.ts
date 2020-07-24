@@ -25,10 +25,11 @@ import { GestionModule } from './gestion/gestion.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { environment } from 'src/environments/environment';
 import { MapComponent } from './map/map.component';
+import { ButtonComponent } from './map/button/button.component';
 
 @NgModule({
   entryComponents: [Dialog],
-  declarations: [AppComponent, components, MapComponent],
+  declarations: [AppComponent, components],
   imports: [
     AngularFireModule.initializeApp(environment.firebaseConfig),
     BrowserModule,
@@ -44,7 +45,6 @@ import { MapComponent } from './map/map.component';
     GestionModule,
     CarouselModule
   ],
-  schemas: [NO_ERRORS_SCHEMA],
   providers: [ClientsService, BooksService, CdcService, NotificationsService  ],
   bootstrap: [AppComponent]
 })
