@@ -1,5 +1,5 @@
  <div id="content" class="container-fluid">
-
+<app-header-map *ngIf="!isMap()"></app-header-map>
 <app-header *ngIf="isMap()"></app-header>
   <router-outlet></router-outlet>
 

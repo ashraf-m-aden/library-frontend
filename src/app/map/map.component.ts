@@ -1,30 +1,38 @@
 import { Router } from '@angular/router';
-import { Component, AfterViewInit, HostListener, Directive, ElementRef } from '@angular/core';
+import { Component, AfterViewInit, HostListener, Directive, ElementRef, OnInit } from '@angular/core';
 import * as L from 'leaflet';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent implements AfterViewInit {
+export class MapComponent implements AfterViewInit, OnInit {
   private map;
   data = [
     { id: 1456, name: 'Obock', number: 23, lat: 11.96, long: 43.29 },
+    { id: 1456, name: 'Q4', number: 23, lat: 11.587239, long: 43.148414 },
+    { id: 1456, name: 'Cheikh Moussa', number: 23, lat: 11.560483, long: 43.117322 },
+    { id: 1456, name: 'PK12', number: 23, lat: 11.557201, long: 43.082019 },
     { id: 1432, name: 'Khor Angar', number: 13, lat: 12.38, long: 43.35 }
   ];
   // @HostListener('mouseenter') onMouseEnter() {
   //   this.voir();
   // }
-  constructor(private el: ElementRef, private route: Router) { }
+  constructor(private el: ElementRef, private route: Router, private title: Title, private meta: Meta) { }
 
+  ngOnInit() {
+    this.title.setTitle('Carte des CDC');
+    this.meta.updateTag({ name: 'description', content: 'Decouvre la carte de tous les CDC de la republique de Djibouti' });
+  }
   async ngAfterViewInit() {
     await this.initMap();
   }
   listener(): void {
     this.el.nativeElement.querySelector('.btn').addEventListener('click', (e) => {
       // console.log(e.target.id);
-      this.voir();
+      // this.voir();
   });
   }
   removeListener(): void {
