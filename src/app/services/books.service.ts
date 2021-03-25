@@ -7,6 +7,9 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,86 +19,75 @@ export class BooksService {
   private pretCollection: AngularFirestoreCollection;
   book: Observable<any>;
   picId;
+  options: {
+    headers?: HttpHeaders | {[header: string]: string | string[]},
+    observe?: 'body' | 'events' | 'response',
+    params?: HttpParams|{[param: string]: string | string[]},
+    reportProgress?: boolean,
+    responseType?: 'arraybuffer'|'blob'|'json'|'text',
+    withCredentials?: boolean,
+  };
+
   constructor(
     private afs: AngularFirestore,
-    private afStorage: AngularFireStorage
+    private afStorage: AngularFireStorage,
+    private http: HttpClient
   ) {
     this.bookCollection = afs.collection('Books');
     this.book = this.bookCollection.valueChanges();
   }
   getGenres() {
-    this.genreCollection = this.afs.collection('Genres');
-    const genres = this.genreCollection.valueChanges();
-    return genres;
+    return this.http.get(environment.apiUrl +'/genres');
+
   }
   deleteGenre(id) {
-    this.genreCollection = this.afs.collection('Genres');
+    return this.http.delete(environment.apiUrl +'/genres/' + id);
 
-    this.genreCollection.doc(id).update({ enabled: false });
   }
   addGenre(genre) {
-    this.genreCollection = this.afs.collection('Genres');
-    this.genreCollection.add(genre).then(data => {
-      this.genreCollection.doc(data.id).update({ idGenre: data.id });
-    });
+    return this.http.post<any>(environment.apiUrl +'/genres', genre);
+
   }
-  getBooksByGenre(genre) {
-    this.bookCollection = this.afs.collection('Books', ref =>
-      ref.where('genre', '==', genre)
-    );
-    const books = this.bookCollection.valueChanges();
-    return books;
+  getBooksByGenre(id) {
+    return this.http.get(environment.apiUrl +'/books/genre/' + id);
+
   }
   getBooks() {
-    // get a lot of Bookss
-    this.bookCollection = this.afs.collection('Books', ref =>
-      ref.where('enabled', '==', true)
-    );
-    const books = this.bookCollection.valueChanges();
-    return books;
+    return this.http.get(environment.apiUrl +'/books');
+
   }
   getBook(idbook) {
     // getOne Books
-    this.bookCollection = this.afs.collection('Books', ref =>
-      ref.where('idBook', '==', idbook).where('enabled', '==', true)
-    );
-    const onebook = this.bookCollection.valueChanges();
-    return onebook;
+    return this.http.get(environment.apiUrl +'/books/' + idbook);
+
+  }
+
+  delete(idbook) {
+    // getOne Books
+    return this.http.delete(environment.apiUrl + '/books/' + idbook);
+
   }
 
   upload(event, id) {
     const path = `${id}`;
     return this.afStorage.ref(path).put(event);
   }
-  addBook(book, pic) {
-    this.bookCollection.add(book).then(data => {
-      this.bookCollection.doc(data.id).update({ idBook: data.id });
-      this.upload(pic, data.id).then(async datta => {
-        await datta.ref.getDownloadURL().then(url => {
-          this.bookCollection.doc(data.id).update({ image: url });
-        });
-      });
-    });
+  addBook(book, id) {
+
+    return this.http.post(environment.apiUrl +'/books/' + id , book);
+
   }
   borrowBook(pret) {
-    this.pretCollection = this.afs.collection('Prets');
-    this.pretCollection.add(pret).then(data => {
-      this.pretCollection.doc(data.id).update({ idPret: data.id });
-    });
-    this.bookCollection.doc(pret.idBook).update({ disponible: false });
+    return this.http.post(environment.apiUrl + '/borrows/', pret);
+
   }
   getPretBook(idBook) {
-    this.pretCollection = this.afs.collection('Prets', ref =>
-      ref.where('idBook', '==', idBook)
-    );
-    const prets = this.pretCollection.valueChanges();
-    return prets;
+    return this.http.get(environment.apiUrl + '/borrows/book/' + idBook);
+
   }
   getAllPrets() {
-    this.pretCollection = this.afs.collection('Prets', ref =>
-    ref.where('rendu', '==', false));
-    const prets = this.pretCollection.valueChanges();
-    return prets;
+    //
+    return this.http.get(environment.apiUrl + '/borrows');
   }
   getOnePret(idPret) {
     this.pretCollection = this.afs.collection('Prets', ref =>
@@ -105,11 +97,7 @@ export class BooksService {
     return pret;
   }
   rendu(pret) {
-    this.pretCollection = this.afs.collection('Prets', ref =>
-      ref.where('idPret', '==', pret.idPret)
-    );
-    this.pretCollection.doc(pret.idPret).update({ rendu: true, returnDate: pret.returnDate  });
-    this.bookCollection = this.afs.collection('Books');
-    this.bookCollection.doc(pret.idBook).update({ disponible: true});
+    return this.http.put(environment.apiUrl + '/borrows', pret);
+
   }
 }

@@ -21,7 +21,7 @@ export class NotificationsComponent implements OnInit {
     private bookS: BooksService,
     private notifS: NotificationsService
   ) {
-    notifS.getAllNotifs().subscribe(data => {
+    notifS.getAllNotifs().subscribe((data:any) => {
       this.datasource = new MatTableDataSource(data);
       this.length = data.length;
       this.datasource.sort = this.sort;

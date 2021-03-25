@@ -5,13 +5,12 @@
         <img class="imgCarousel" [src]="book?.image" />
       </div>
       <div class="card-body">
-        <h6 class="card-category text-gray">{{ book?.idCDC }} -- Status: <span *ngIf="book?.disponible" class="text-success">Disponible</span>
-            <span class="text-danger" *ngIf="!book?.disponible">Non disponible</span></h6>
+        <h6 class="card-category text-gray">{{ book?.idCDC }} -- Status: <span *ngIf="book?.disponible == 1" class="text-success">Disponible</span>
+            <span class="text-danger" *ngIf="book?.disponible !==1">Non disponible</span></h6>
         <h4 class="card-title">{{ book?.title }}</h4>
         Auteur: {{ book?.author }} <br />
         Année: {{ book?.year }} <br />
-        Genre: {{ book?.genre }}<br />
-        Numero de serie: {{ book?.sNumber }}<br />
+        Genre: {{ book?.genre.name }}<br />
 
         <a *ngIf="book?.disponible"
           class="btn btn-danger btn-round"
@@ -34,19 +33,17 @@
           <th scope="col">Date de retour</th>
           <th scope="col">Preté par</th>
           <th scope="col">Rendu</th>
-          <th scope="col">Etat du livre</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let pret of prets; let i = index" class="small">
           <td>{{ i + 1 }}</td>
-          <td>{{ pret?.userName }}</td>
+          <td>{{ pret?.client.firstName }} {{ pret?.client.lastName }}</td>
           <td>{{ pret?.borrowDate }}</td>
           <td>{{ pret?.returnDate }}</td>
-          <td>{{ pret?.nameAdmin }}</td>
-          <td *ngIf="pret?.rendu" class=" bg-success text-light">Oui</td>
-          <td *ngIf="!pret?.rendu" class=" bg-danger text-light">Non</td>
-          <td>{{ pret?.state }}</td>
+          <td>{{ pret?.user.username }}</td>
+          <td *ngIf="pret?.returned === 1" class=" bg-success text-light">Oui</td>
+          <td *ngIf="pret?.returned === 0" class=" bg-danger text-light">Non</td>
         </tr>
       </tbody>
     </table>

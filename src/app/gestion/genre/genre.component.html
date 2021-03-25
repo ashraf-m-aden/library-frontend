@@ -4,24 +4,12 @@
       <h4 class="card-header bg-dark text-light">Genre de litteratures</h4>
       <form class="form-check-inline card-body" [formGroup]="genreForm">
         <div class="row">
-          <input
-            class="form-control col-sm-12 col-md-4"
-            formControlName="name"
-            type="text"
-            placeholder="Nom du genre"
-          />
-          <textarea
-            class="form-control col-sm-12 col-md-9"
-            formControlName="description"
-            type="text"
-            placeholder="Description du genre"
-          ></textarea>
+          <input class="form-control col-sm-12 col-md-4" formControlName="name" type="text"
+            placeholder="Nom du genre" />
+          <textarea class="form-control col-sm-12 col-md-9" formControlName="description" type="text"
+            placeholder="Description du genre"></textarea>
         </div>
-        <button
-          class="btn btn-outline-success"
-          type="submit"
-          (click)="onSubmit()"
-        >
+        <button class="btn btn-outline-success" type="submit" (click)="onSubmit()">
           Ajouter
         </button>
       </form>
@@ -29,12 +17,7 @@
   </div>
   <div class="col-sm-12 col-md-10">
     <div class="card">
-      <mat-paginator
-        [length]="length"
-        [pageSize]="pageSize"
-        [pageSizeOptions]="pageSizeOptions"
-        showFirstLastButtons
-      >
+      <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" showFirstLastButtons>
       </mat-paginator>
       <div class="example-container mat-elevation-z8 card-body">
         <mat-table [dataSource]="datasource" matSort>
@@ -60,7 +43,7 @@
               Action
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
-              <button class="btn btn-group btn-danger">
+              <button class="btn btn-group btn-danger" (click)="delete(row.id)">
                 Supprimer
               </button>
             </mat-cell>

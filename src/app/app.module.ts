@@ -1,3 +1,5 @@
+import { AuthGuardService } from './services/guards/auth-guard.service';
+import { AuthService } from './services/auth.service';
 import { NotificationsService } from './services/notifications.service';
 import { CdcService } from './services/cdc.service';
 import { Dialog } from './users/add-user/add-user.component';
@@ -16,16 +18,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ChartsModule } from 'ng2-charts';
 
-import { HttpClientModule } from '@angular/common/http';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
-import { AngularFireAuthModule } from '@angular/fire/auth';
-import { AngularFireStorageModule } from '@angular/fire/storage';
 import { GestionModule } from './gestion/gestion.module';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { environment } from 'src/environments/environment';
-import { MapComponent } from './map/map.component';
 import { HeaderMapComponent } from './header-map/header-map.component';
+import { AuthGuardDeconnectedService } from './services/guards/auth-guard-deconnected.service';
 
 @NgModule({
   entryComponents: [Dialog],
@@ -43,9 +42,16 @@ import { HeaderMapComponent } from './header-map/header-map.component';
     ChartsModule,
     AngularFireAnalyticsModule,
     GestionModule,
-    CarouselModule
+    CarouselModule,
+    HttpClientModule
   ],
-  providers: [ClientsService, BooksService, CdcService, NotificationsService  ],
+  providers: [ClientsService, BooksService, CdcService, NotificationsService, AuthService,
+    AuthGuardDeconnectedService, AuthGuardService,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: AuthGuardService,
+      multi   : true,
+    },  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

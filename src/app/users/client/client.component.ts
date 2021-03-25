@@ -1,7 +1,10 @@
+import { AuthService } from './../../services/auth.service';
 import { BooksService } from 'src/app/services/books.service';
 import { ClientsService } from './../../services/clients.service';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ChartType } from 'chart.js';
+import { monkeyPatchChartJsTooltip, monkeyPatchChartJsLegend } from 'ng2-charts';
 export interface PeriodicElement {
   name: string;
   ID: number;
@@ -19,51 +22,50 @@ export class ClientComponent {
   User; // user Data
   public pieChartLabels = [];
   public pieChartData = [];
-  public pieChartType = 'pie';
+  public pieChartLegend = true;
+  public pieChartType: ChartType = 'pie';
   myBooks;
 
   constructor(
     private aR: ActivatedRoute,
-    private route: Router,
+    private auth: AuthService,
     private userS: ClientsService,
     private bookS: BooksService
   ) {
+    monkeyPatchChartJsTooltip();
+    monkeyPatchChartJsLegend();
     this.aR.params.subscribe(params => {
       this.id = params.id;
       userS.getClient(this.id).subscribe((data: any) => {
-        this.User = data[0];
+        this.User = data;
+      }, (error) => {
+        this.auth.checkAuthError(error);
       });
     });
     this.myBooks = [];
-    userS.getAllmyBooks(this.id).subscribe(data => {
-      data.forEach(pret => {
-        bookS.getBook(pret.idBook).subscribe(results => {
-          this.myBooks.push({
-            title: pret.title,
-            author: results[0].author,
-            genre: results[0].genre,
-            returnDate: pret.returnDate,
-            rendu: pret.rendu,
-            borrowDate: pret.borrowDate
-          });
-        });
+    userS.getAllmyBooks(this.id).subscribe((data: any) => {
+      this.myBooks = data;
+    }
+      , (error) => {
+        this.auth.checkAuthError(error);
       });
-      this.chargeStatistic();
-    });
+     this.chargeStatistic();
   }
   chargeStatistic() {
     let cnt = 0;
-    this.bookS.getGenres().subscribe(data => {
+    this.bookS.getGenres().subscribe((data:any) => {
       data.forEach(genre => {
+        this.pieChartLabels.push(genre.name);
         cnt = 0;
-        this.myBooks.forEach(book => {
-          if (book.genre === genre.name) {
+        this.myBooks.forEach(pret => {
+          if (pret.book.genre.name === genre.name) {
             cnt += 1;
           }
         });
-        this.pieChartLabels.push(genre.name);
         this.pieChartData.push(cnt);
       });
+    }, (error) => {
+      this.auth.checkAuthError(error);
     });
   }
 

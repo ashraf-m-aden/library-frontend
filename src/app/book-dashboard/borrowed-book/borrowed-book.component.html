@@ -2,7 +2,7 @@
   <div class="col-sm-12 col-md-8">
     <div class="card">
       <h4 class="card-header bg-dark text-light">Recherche de livres</h4>
-  
+
   <form [formGroup]="searchForm" class=" card-body form-check-inline">
     <input
       class="form-control"
@@ -40,25 +40,25 @@
         <th scope="col">Date de retour</th>
         <th scope="col">Preté par</th>
         <th scope="col">Rendu</th>
-        <th scope="col">Etat du livre</th>
         <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let pret of searchPrets; let i = index" class="small">
+
         <td>{{ i + 1 }}</td>
-        <td>{{ pret?.title }}</td>
-        <td>{{ pret?.genre }}</td>
-        <td>{{ pret?.userName }}</td>
+        <td>{{ pret?.book?.title }}</td>
+        <td>{{ pret?.book?.genre?.name }}</td>
+        <td>{{ pret?.client?.firstName }}</td>
         <td>{{ pret?.borrowDate }}</td>
         <td>{{ pret?.returnDate }}</td>
-        <td>{{ pret?.nameAdmin }}</td>
+        <td>{{ pret?.user?.username }}</td>
         <td *ngIf="pret?.rendu">Oui</td>
         <td *ngIf="!pret?.rendu">Non</td>
-        <td>{{ pret?.state }}</td>
         <td class="d-flex flex-row">
-          <button class="btn btn-group  btn-success" (click)="rendu(pret)">Rendu</button>
-          <button  class="btn btn-group  btn-danger" (click)="notifier()">Notifier</button>
+          <button class="btn btn-group  btn-success" *ngIf="pret?.returned === 0" (click)="rendu(pret)">Rendu</button>
+          <button  class="btn btn-group  btn-danger" *ngIf="pret?.returned === 0" (click)="notifier()">Notifier</button>
+          <button  class="btn btn-group  btn-info" *ngIf="pret?.returned === 1" (click)="check(pret?.book?.id)">Check</button>
         </td>
       </tr>
     </tbody>
@@ -85,16 +85,15 @@
       <tbody>
         <tr *ngFor="let pret of Prets; let i = index" class="small">
           <td>{{ i + 1 }}</td>
-          <td>{{ pret?.title }}</td>
-          <td>{{ pret?.genre }}</td>
-          <td>{{ pret?.userName }}</td>
+          <td>{{ pret?.book?.title }}</td>
+          <td>{{ pret?.book?.genre?.name }}</td>
+          <td>{{ pret?.client?.firstName }}</td>
           <td>{{ pret?.borrowDate }}</td>
           <td>{{ pret?.returnDate }}</td>
-          <td>{{ pret?.nameAdmin }}</td>
-          <td *ngIf="pret?.rendu">Oui</td>
-          <td *ngIf="!pret?.rendu">Non</td>
-          <td>{{ pret?.state }}</td>
-         
+          <td>{{ pret?.user?.username }}</td>
+          <td *ngIf="pret?.returned === 1">Oui</td>
+          <td *ngIf="pret?.returned === 0">Non</td>
+
         </tr>
       </tbody>
     </table>

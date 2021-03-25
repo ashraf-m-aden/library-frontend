@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { BooksService } from 'src/app/services/books.service';
 import { async } from '@angular/core/testing';
 import { ClientsService } from './../../services/clients.service';
@@ -31,12 +32,13 @@ export class BorrowBookComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private userS: ClientsService,
-    private bookS: BooksService
+    private bookS: BooksService,
+    private auth: AuthService
   ) {
     const currentYear = new Date().getFullYear();
     const currentMonth = new Date().getMonth();
     const currentDay = new Date().getDate();
-    this.minDate = new Date(currentYear - 0, currentMonth , currentDay);
+    this.minDate = new Date(currentYear - 0, currentMonth, currentDay);
     this.maxDate = new Date(currentYear + 0, currentMonth, currentDay + 15);
   }
 
@@ -44,13 +46,12 @@ export class BorrowBookComponent implements OnInit {
     this.initsearchForm();
     this.borrowForm = this.formBuilder.group({
       returnDate: ['', Validators.required],
-      state: ['', Validators.required]
     });
   }
-  async onSubmit() {
+  onSubmit() {
     const event = new Date(this.borrowForm.get('returnDate').value);
 
-    const options = {
+    const options: any = {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
@@ -58,21 +59,18 @@ export class BorrowBookComponent implements OnInit {
     };
     const date = event.toLocaleDateString('fr-FR', options);
     const Pret = {
-      idPret: '',
-      idBook: this.book.idBook,
-      idUser: this.choosenUser.idUser,
-      title: this.book.title,
-      genre: this.book.genre,
-      userName: this.choosenUser.name,
-      idCDC: '',
+      userId: localStorage.getItem('id'),
+      bookId: this.book.id,
+      clientId: this.choosenUser.id,
       borrowDate: new Date().toLocaleDateString('fr-FR', options),
       returnDate: date,
-      nameAdmin: 'Kalia Mohamed Aden',
-      rendu: false,
-      state: this.borrowForm.get('state').value
+      returned: 0,
     };
-    await this.bookS.borrowBook(Pret);
-    this.borrowed.emit();
+    this.bookS.borrowBook(Pret).subscribe(() => {
+      this.borrowed.emit();
+    }, (error) => {
+      this.auth.checkAuthError(error);
+    });
   }
   search() {
     this.Users = [];
@@ -85,16 +83,18 @@ export class BorrowBookComponent implements OnInit {
     if (letter === '') {
       this.errorMessage = true;
     } else {
-      this.userS.getClients().subscribe(data => {
+      this.userS.getClients().subscribe((data: any) => {
         data.forEach(async user => {
-          if (user.name.toLowerCase().includes(letter)) {
-           await this.Users.push(user);
-           this.searchResults = true;
+          if (user.firstName.toLowerCase().includes(letter) || user.lastName.toLowerCase().includes(letter)) {
+            await this.Users.push(user);
+            this.searchResults = true;
           }
         });
         if (this.Users.length === 0) {
           this.errorMessage = true;
         }
+      }, (error) => {
+        this.auth.checkAuthError(error);
       });
     }
   }
@@ -111,5 +111,12 @@ export class BorrowBookComponent implements OnInit {
     this.choosenUser = choosenUser;
     this.selected = true;
     this.searchResults = false;
+  }
+
+  resetUser() {
+    this.choosenUser = null;
+    this.selected = false;
+    this.searchResults = false;
+    this.initsearchForm();
   }
 }

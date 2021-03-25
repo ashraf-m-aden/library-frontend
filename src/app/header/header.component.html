@@ -42,7 +42,7 @@
           </div>
         </div>
       </li>
-      <li class="nav-item list-inline-item">
+      <!-- <li class="nav-item list-inline-item">
         <div class="dropdown">
           <a
             class="nav-link text-light"
@@ -57,7 +57,7 @@
             <a class="dropdown-item" >Super Admin</a>
             <a class="dropdown-item" >Admin</a>
             <a class="dropdown-item" routerLink="/allCDC">CDC</a>
-           
+
           </div>
         </div>
       </li>
@@ -82,20 +82,20 @@
       </li>
       <li class="nav-item list-inline-item">
         <a class="nav-link text-light">Statistiques</a>
-      </li>
+      </li> -->
     </ul>
     <div class="filler"></div>
     <ul class="navbar-nav list-inline">
-      <li class="nav-item list-inline-item">
+      <!-- <li class="nav-item list-inline-item">
       <div matBadgeOverlap="true" matBadgePosition="above after" [matBadge]="matBadge" [matBadgeHidden]="matBadge == 0" routerLink="/notification" matBadgeColor="warn">
         <img  src="../../assets/img/bell.png"
         style="height: 30px; width: 30px;">
       </div>
-      </li>
+      </li> -->
       <li class="nav-item list-inline-item">
-        <a class="nav-link text-light">Connexion</a>
+        <a class="nav-link text-light" [routerLink]="['/login']" *ngIf="!isAuth">Connexion</a>
       </li><li class="nav-item list-inline-item">
-        <a class="nav-link text-light">Deconnexion</a>
+        <a class="nav-link text-light" *ngIf="isAuth" (click)="logout()">Deconnexion</a>
       </li>
     </ul>
   </div>

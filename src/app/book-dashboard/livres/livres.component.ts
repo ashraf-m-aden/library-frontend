@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OwlOptions } from 'ngx-owl-carousel-o';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
@@ -10,7 +10,7 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./livres.component.scss']
 })
 export class LivresComponent implements OnInit {
-  @Input() genre: string;
+  @Input() genreId: number;
   customOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -50,7 +50,7 @@ export class LivresComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.bookS.getBooksByGenre(this.genre).subscribe(data => {
+    this.bookS.getBooksByGenre(this.genreId).subscribe((data:any) => {
       this.books = data;
       this.datasource = new MatTableDataSource(data);
       this.length = data.length;
@@ -60,5 +60,17 @@ export class LivresComponent implements OnInit {
   }
   // tslint:disable-next-line:use-lifecycle-interface
   ngAfterViewInit() {
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    this.bookS.getBooksByGenre(this.genreId).subscribe((data:any) => {
+      this.books = data;
+      this.datasource = new MatTableDataSource(data);
+      this.length = data.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
+        });
   }
 }

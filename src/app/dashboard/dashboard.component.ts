@@ -1,5 +1,8 @@
+import { BooksService } from 'src/app/services/books.service';
+import { AuthService } from './../services/auth.service';
 import { Router } from '@angular/router';
 import { Component, ElementRef, AfterViewInit, Directive, HostListener } from '@angular/core';
+import { ClientsService } from '../services/clients.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -94,14 +97,32 @@ export class DashboardComponent {
   yAxisLabel = 'Nombres';
   timeline = true;
 
+  clientNumber = 0;
+  bookNumber = 0;
+  borrowBookNumber = 0;
+  userName;
+  isAuth;
+
   colorScheme = {
     domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
-  constructor( private elementRef: ElementRef, private router:Router) {
+  constructor(private elementRef: ElementRef, private router: Router, private auth: AuthService,
+    private client: ClientsService, private book: BooksService) {
     Object.assign(this, { this: this.multi });
-    console.log(this.router.url);
-
-
+    this.userName = localStorage.getItem('username');
+    this.book.getBooks().subscribe(async (data: any) => {
+      this.bookNumber = data.length;
+      let borrowBook = await data.filter(book => {
+        return book.disponible === 0;
+      });
+      this.borrowBookNumber = borrowBook.length;
+    });
+    this.client.getClients().subscribe(async (data: any) => {
+      this.clientNumber = data.length;
+    });
+    this.auth.isAuth.subscribe(data => {
+      this.isAuth = data;
+    })
   }
 
   onSelect(data): void {

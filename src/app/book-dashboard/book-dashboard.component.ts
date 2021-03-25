@@ -1,5 +1,6 @@
+import { AuthService } from './../services/auth.service';
 import { BooksService } from './../services/books.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { Router } from '@angular/router';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -23,22 +24,28 @@ export class BookDashboardComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10];
   allBooks = true;
   specificBooks = false;
-  bookGenre;
+  bookGenreId: number;
   errorMessage: boolean;
   constructor(
     private bookS: BooksService,
     private route: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private auth: AuthService
   ) {
-    this.bookS.getBooks().subscribe(data => {
+    this.bookS.getBooks().subscribe((data: any) => {
       this.datasource = new MatTableDataSource(data);
       this.length = data.length;
       this.datasource.sort = this.sort;
       this.datasource.paginator = this.paginator;
+    }, (error) => {
+      this.auth.checkAuthError(error);
     });
-    this.bookS.getGenres().subscribe(data => {
+    this.bookS.getGenres().subscribe((data: any) => {
       this.genres = data;
+    }, (error) => {
+      this.auth.checkAuthError(error);
     });
+
   }
   ngOnInit() {
     this.initForm();
@@ -57,7 +64,7 @@ export class BookDashboardComponent implements OnInit {
     if (letter === '') {
       this.errorMessage = true;
     } else {
-      this.bookS.getBooks().subscribe( data => {
+      this.bookS.getBooks().subscribe((data: any) => {
         data.forEach(async book => {
           if (book.title.toLowerCase().includes(letter.toLowerCase())) {
             await this.Books.push(book);
@@ -87,9 +94,34 @@ export class BookDashboardComponent implements OnInit {
     this.allBooks = true;
     this.specificBooks = false;
   }
-  display(genre) {
+  display(id) {
     this.allBooks = false;
     this.specificBooks = true;
-    this.bookGenre = genre.name;
+    this.bookGenreId = id;
+  }
+
+  delete(id) {
+    this.bookS.delete(id).subscribe(() => {
+
+    }, (error) => {
+      this.auth.checkAuthError(error);
+      if (error.status === 500) {
+        alert('This book was already borrowed, it\'s saved in the borrowed book db, you can\'t delete it');
+      }
+    });
+  }
+
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnChanges(changes: SimpleChanges): void {
+    //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    //Add '${implements OnChanges}' to the class.
+    this.bookS.getBooks().subscribe((data: any) => {
+      this.datasource = new MatTableDataSource(data);
+      this.length = data.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
+    }, (error) => {
+      this.auth.checkAuthError(error);
+    });
   }
 }

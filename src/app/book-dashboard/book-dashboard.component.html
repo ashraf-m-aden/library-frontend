@@ -9,7 +9,7 @@
         type="button"
         class=" list-group-item bg-dark btn-outline-danger text-light"
         *ngFor="let genre of genres"
-        (click)="display(genre)"
+        (click)="display(genre.id)"
       >
         {{ genre.name }}
       </li>
@@ -117,20 +117,26 @@
                   <mat-header-cell *matHeaderCellDef mat-sort-header>
                     Genre
                   </mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{ row.genre }} </mat-cell>
+                  <mat-cell *matCellDef="let row"> {{ row.genre.name }} </mat-cell>
                 </ng-container>
                 <!-- action Column -->
                 <ng-container matColumnDef="Action">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>
                     Action
                   </mat-header-cell>
-                  <mat-cell *matCellDef="let row">
+                  <mat-cell *matCellDef="let row" class="d-flex justify-content-around">
                     <button
-                      [routerLink]="['/book', row.idBook]"
-                      class="btn btn-outline-info"
+                      [routerLink]="['/book', row.id]"
+                      class="btn btn-outline-info small p-2"
                     >
-                      Consulter
+                      Check
                     </button>
+                    <button
+                 (click)="delete(row.id)"
+                    class="btn btn-danger small p-2"
+                  >
+                    Delete
+                  </button>
                   </mat-cell>
                 </ng-container>
 
@@ -145,6 +151,6 @@
         </div>
       </div>
     </div>
-    <app-livres *ngIf="specificBooks" [genre]="bookGenre"></app-livres>
+    <app-livres *ngIf="specificBooks" [genreId]="bookGenreId"></app-livres>
   </div>
 </div>

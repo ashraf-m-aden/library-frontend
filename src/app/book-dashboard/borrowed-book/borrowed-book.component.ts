@@ -1,6 +1,8 @@
+import { AuthService } from './../../services/auth.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BooksService } from 'src/app/services/books.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-borrowed-book',
@@ -13,25 +15,44 @@ export class BorrowedBookComponent implements OnInit {
   searchPrets;
   searchForm: FormGroup;
   errorMessage = false;
-  constructor(private bookS: BooksService, private formbuilder: FormBuilder) {
-    this.bookS.getAllPrets().subscribe(data => (this.Prets = data));
+  constructor(private bookS: BooksService, private formbuilder: FormBuilder,
+              private router: Router, private auth: AuthService) {
+
+    this.getAllPrets();
   }
   ngOnInit() {
     this.initsearchForm();
   }
-  async rendu(pret) {
-    const options = {
+  ngOnChanges(changes: SimpleChanges): void {
+    // Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+    // Add '${implements OnChanges}' to the class.
+    this.getAllPrets();
+  }
+  rendu(pret) {
+    const options: any = {
       weekday: 'long',
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     };
     pret.returnDate = new Date().toLocaleDateString('fr-FR', options),
-    await this.bookS.rendu(pret);
-    this.initsearchForm();
+      pret.returned = 1;
+    this.bookS.rendu(pret).subscribe(() => {
+      this.initsearchForm();
+    }, (error) => {
+      this.auth.checkAuthError(error);
+    });
+
   }
   notifier() {
     //
+  }
+  getAllPrets() {
+    this.bookS.getAllPrets().subscribe((data: any) => {
+      this.Prets = data;
+    }, (error) => {
+      this.auth.checkAuthError(error);
+    });
   }
   search() {
     this.searchPrets = [];
@@ -45,9 +66,9 @@ export class BorrowedBookComponent implements OnInit {
 
     } else {
       this.Prets.forEach(async pret => {
-        if (pret.title.toLowerCase().includes(letter)) {
-         await this.searchPrets.push(pret);
-         this.searchResults = true;
+        if (pret.book.title.toLowerCase().includes(letter)) {
+          await this.searchPrets.push(pret);
+          this.searchResults = true;
 
         }
       });
@@ -64,5 +85,11 @@ export class BorrowedBookComponent implements OnInit {
     this.searchPrets = [];
     this.searchResults = false;
     this.errorMessage = false;
+  }
+
+  check(id) {
+
+    this.router.navigate(['/book/' + id]);
+
   }
 }

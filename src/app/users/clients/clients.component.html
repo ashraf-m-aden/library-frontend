@@ -36,6 +36,7 @@
           <thead>
             <tr>
               <th scope="col">#</th>
+              <th scope="col">Prenom</th>
               <th scope="col">Nom</th>
               <th scope="col">Action</th>
             </tr>
@@ -43,7 +44,8 @@
           <tbody>
             <tr *ngFor="let user of Users; let i = index">
               <td>{{ i + 1 }}</td>
-              <td>{{ user.name }}</td>
+              <td>{{ user.firstName }}</td>
+              <td>{{ user.lastName }}</td>
               <td>
                 <button
                   (click)="details(user.idUser)"
@@ -63,7 +65,7 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-12 col-md-4">
+  <!-- <div class="col-sm-12 col-md-4">
     <div class="card">
       <h4 class="card-header bg-dark text-light">Messages</h4>
       <div class="card-body menuB">
@@ -75,26 +77,26 @@
                       </div>
           </div>
                 <div class="col-md-6 col-sm-12">
-                  <form *ngIf="mail">      
+                  <form *ngIf="mail">
                     <mat-form-field class="form-group">
                       <textarea matInput placeholder="Ecrivez votre mail" type="text" name="" id="" cols="5" rows="5"></textarea>
-                    </mat-form-field> 
-                    <button class=" btn btn-primary mat-raised-button">envoyer le mail</button>   
+                    </mat-form-field>
+                    <button class=" btn btn-primary mat-raised-button">envoyer le mail</button>
                   </form>
-                  <form *ngIf="sms">        
+                  <form *ngIf="sms">
                     <mat-form-field class="form-group">
                       <textarea matInput placeholder="Ecrivez votre sms" type="text" name="" id="" cols="5" rows="5"></textarea>
-                    </mat-form-field> 
-                    <button class="btn btn-success mat-raised-button">envoyer le sms</button>   
-        
+                    </mat-form-field>
+                    <button class="btn btn-success mat-raised-button">envoyer le sms</button>
+
                   </form>
                 </div>
-                
+
               </div>
-              
+
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="row">
   <div class="col-sm-12 col-md-10">
@@ -109,27 +111,27 @@
       <div class="example-container mat-elevation-z8 card-body">
         <mat-table [dataSource]="datasource" matSort>
           <!-- ID Column -->
-          <ng-container matColumnDef="name">
+          <ng-container matColumnDef="firstName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Nom
+              Prenom
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ row.firstName }} </mat-cell>
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="genre">
+          <ng-container matColumnDef="lastName">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Genre
+              Nom
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.genre }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ row.lastName }} </mat-cell>
           </ng-container>
 
           <!-- Name Column -->
-          <ng-container matColumnDef="age">
+          <ng-container matColumnDef="email">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-              Age
+              Email
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.age }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ row.email }} </mat-cell>
           </ng-container>
 
           <!-- Name Column -->
@@ -139,7 +141,7 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
               <button
-                (click)="details(row.idUser)"
+                (click)="details(row.id)"
                 class="btn btn-group btn-outline-primary"
               >
                 Consulter

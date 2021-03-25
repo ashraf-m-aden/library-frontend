@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { BooksService } from './../../services/books.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -15,17 +16,27 @@ export class BookComponent implements OnInit {
   prets;
   constructor(
     private aR: ActivatedRoute,
-    private router: Router,
+    private auth: AuthService,
     private bookS: BooksService
   ) {
     this.aR.params.subscribe(params => {
       this.id = params.id;
       bookS.getBook(this.id).subscribe((data: any) => {
-        this.book = data[0];
+        this.book = data;
         this.bookS
-          .getPretBook(this.book.idBook)
+          .getPretBook(this.book.id)
           .subscribe(results => (this.prets = results));
+      }, (error) => {
+        this.auth.checkAuthError(error);
       });
+
+      bookS.getPretBook(this.id).subscribe((data)=>{
+        this.prets = data;
+        console.log(data);
+
+      }, (error) => {
+        this.auth.checkAuthError(error);
+      })
     });
   }
   borrowBook() {

@@ -56,7 +56,7 @@ export class AddCDCComponent implements OnInit {
       data: this.cdc
     });
 
-    dialogRef.afterClosed().subscribe(data => {
+    dialogRef.afterClosed().subscribe((data:any) => {
       if (data) {
         this.cdcS.addCdc(this.cdc);
         this.router.navigate(['/allCDC']);

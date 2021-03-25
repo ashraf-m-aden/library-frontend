@@ -1,12 +1,12 @@
 <div class="row">
-  <div class="col-sm-12 col-md-10">
+  <!-- <div class="col-sm-12 col-md-10">
     <div class="card">
       <div class="card-body">
         <owl-carousel-o [options]="customOptions">
           <ng-template
             carouselSlide
             *ngFor="let book of books"
-            [id]="book.idBook"
+            [id]="book.id"
           >
             <div class="imgWrapper">
               <img [src]="book.image" [title]="book.title" class="imgCarousel" />
@@ -15,7 +15,7 @@
         </owl-carousel-o>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 <div class="row">
   <div class="col-sm-12">
@@ -58,7 +58,7 @@
             </mat-header-cell>
             <mat-cell *matCellDef="let row">
               <button
-                [routerLink]="['/book', row.idBook]"
+                [routerLink]="['/book', row.id]"
                 class="btn btn-outline-info"
               >
                 Consulter

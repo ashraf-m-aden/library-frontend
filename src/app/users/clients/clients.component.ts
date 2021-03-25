@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { ClientsService } from './../../services/clients.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,8 +17,9 @@ export class ClientsComponent implements OnInit {
   mail = false;
   searchForm: FormGroup;
   searchResults = false;
-  displayedColumns = ['name', 'age', 'genre', 'Action'];
+  displayedColumns = ['firstName', 'lastName', 'email', 'Action'];
   errorMessage = false;
+  retrievedUsers;
   Users = [];
   datasource;
   length;
@@ -26,13 +28,17 @@ export class ClientsComponent implements OnInit {
   constructor(
     private userS: ClientsService,
     private route: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private auth: AuthService
   ) {
-    this.userS.getClients().subscribe(data => {
+    this.userS.getClients().subscribe((data: any) => {
+      this.retrievedUsers = data;
       this.datasource = new MatTableDataSource(data);
       this.length = data.length;
       this.datasource.sort = this.sort;
       this.datasource.paginator = this.paginator;
+    }, (error) => {
+      this.auth.checkAuthError(error);
     });
   }
   showSms() {
@@ -63,17 +69,17 @@ export class ClientsComponent implements OnInit {
     if (letter === '') {
       this.errorMessage = true;
     } else {
-      this.userS.getClients().subscribe(data => {
-        data.forEach(async user => {
-          if (user.name.toLowerCase().includes(letter)) {
-            await this.Users.push(user);
-            this.searchResults = true;
-          }
-        });
-        if (this.Users.length === 0) {
-          this.errorMessage = true;
+
+      this.retrievedUsers.forEach(async user => {
+        if (user.firstName.toLowerCase().includes(letter) || (user.lastName.toLowerCase().includes(letter))) {
+          this.Users.push(user);
+          this.searchResults = true;
         }
       });
+      if (this.Users.length === 0) {
+        this.errorMessage = true;
+      }
+
     }
   }
   initForm() {

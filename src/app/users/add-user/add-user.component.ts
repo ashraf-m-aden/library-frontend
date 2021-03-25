@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { ClientsService } from './../../services/clients.service';
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -26,67 +27,58 @@ export class AddUserComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     public dialog: MatDialog,
-    private userS: ClientsService
+    private userS: ClientsService,
+    private auth: AuthService
   ) {}
 
   ngOnInit() {
     this.initForm();
-    //  this.compS.getCompany(localStorage.getItem('id')).subscribe(
-    //  (data) => this.user = data
-    // );
   }
   initForm() {
     this.userForm = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      age: ['', [Validators.required]],
-      genre: ['', [Validators.required]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
       email: ['', [Validators.required]],
-      number: ['', Validators.required],
-      address: ['', Validators.required]
     });
   }
   onSubmit() {
     this.user = {
-      idUser: '',
-      name: this.userForm.get('name').value,
-      age: this.userForm.get('age').value,
-      created: Date.now(),
-      enabled: true,
-      genre: this.userForm.get('genre').value,
-      address: this.userForm.get('address').value,
-      number: this.userForm.get('number').value,
+      firstName: this.userForm.get('firstName').value,
+      lastName: this.userForm.get('lastName').value,
+      enabled: 1,
       email: this.userForm.get('email').value,
-      idCDC: '',
-      image: ''
     };
 
     this.openDialog();
   }
-  upload(event) {
-    this.picSend = event.target.files[0];
-    const reader = new FileReader();
-    const mimeType = event.target.files[0].type;
-    if (mimeType.match(/image\/*/) == null) {
-      this.message = 'Only images are supported.';
-      return;
-    }
-    console.log(this.picSend);
+  // upload(event) {
+  //   this.picSend = event.target.files[0];
+  //   const reader = new FileReader();
+  //   const mimeType = event.target.files[0].type;
+  //   if (mimeType.match(/image\/*/) == null) {
+  //     this.message = 'Only images are supported.';
+  //     return;
+  //   }
+  //   console.log(this.picSend);
 
-    reader.readAsDataURL(event.target.files[0]);
-    reader.onload = () => {
-      this.picTab.push({ image: reader.result });
-    };
-  }
+  //   reader.readAsDataURL(event.target.files[0]);
+  //   reader.onload = () => {
+  //     this.picTab.push({ image: reader.result });
+  //   };
+  // }
   openDialog(): void {
     const dialogRef = this.dialog.open(Dialog, {
       width: '250px',
       data: this.user
     });
 
-    dialogRef.afterClosed().subscribe(data => {
+    dialogRef.afterClosed().subscribe((data:any) => {
       if (data === 'ok') {
-        this.userS.addClient(this.user, this.picSend);
-        this.router.navigate(['/clients']);
+        this.userS.addClient(this.user).subscribe(() => {
+         this.router.navigate(['/clients']);
+        },(error) => {
+          this.auth.checkAuthError(error);
+        });
       }
     });
   }

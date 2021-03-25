@@ -1,5 +1,5 @@
 <div class="dashboard">
-  <div class="row">
+  <div class="row" *ngIf="isAuth">
     <div class="col-lg-3 col-md-6 col-sm-6">
       <div class="card card-stats border-success">
         <div class="card-body d-flex justify-content-between border-success ">
@@ -8,7 +8,7 @@
           </div>
           <div class=" text-right">
             <h6 class=" card-subtitle text-secondary">Nombre de livres total</h6>
-            <h4 class="card-title">156</h4>
+            <h4 class="card-title">{{bookNumber}}</h4>
           </div>
         </div>
         <div class="card-footer border-success ">
@@ -27,7 +27,7 @@
           </div>
           <div class=" text-right">
             <h6 class=" card-subtitle text-secondary">Nombre d'abonnés</h6>
-            <h4 class="card-title">47</h4>
+            <h4 class="card-title">{{clientNumber}}</h4>
           </div>
         </div>
         <div class="card-footer border-info ">
@@ -46,7 +46,7 @@
           </div>
           <div class=" text-right">
             <h6 class=" card-subtitle text-secondary">Livres empreintés</h6>
-            <h4 class="card-title">23</h4>
+            <h4 class="card-title">{{borrowBookNumber}}</h4>
           </div>
         </div>
         <div class="card-footer border-danger ">
@@ -63,22 +63,40 @@
           <div>
             <img src="../../assets/img/cdc.png" alt="" style="height: 50px;width: 50px;" />
           </div>
-          <div class=" text-right">
-            <h6 class=" card-subtitle text-secondary">CDC</h6>
-            <h4 class="card-title">Q6</h4>
-          </div>
         </div>
         <div class="card-footer border-warning ">
-          Connecté en tant que : Mr/Mme XX
+          Connecté en tant que : {{userName}}
           <hr class="border-warning" />
-          <button class="btn btn-group mat-raised-button btn-warning">
-            Consulter
-          </button>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
+    <div class="col-12 info">
+      <p>Hello, this is a little application I made to show off my Angular9 and springBoot skills.
+      </p>
+<p>It's a debut of a library application. In this little application, you can create new client, new types of books(genres) and then attribute some books to those types.
+  Client can borrow books and you can register a book as "returned" if the client give it back.</p>
+
+<p>For the front-end I used Angular, bootstrap, Angular material and a chart. This app had firebase as a backend before to execute CRUD operations, but i changed it to Spring boot.
+</p>
+<p>The back-end now, use spring-rest, spring-data-jpa, hibernate, spring-security and jwt.
+  But to visit, you have to authenticate first!</p>
+<table class="table col-md-3">
+  <tr>
+    <td class="font-weight-bold">username:</td>
+    <td>ashraf</td>
+  </tr>
+  <tr>
+    <td class="font-weight-bold">password:</td>
+    <td>spring-boot</td>
+  </tr>
+</table>
+
+ PS: the app is in French, I hope you don't get lost.
+    </div>
+  </div>
+  <!-- <div class="row">
     <div class="col-md-4">
       <div class="card ">
         <div class="card-header ">
@@ -105,5 +123,5 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { BooksService } from './../../services/books.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
@@ -20,20 +21,24 @@ export class GenreComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10];
   constructor(
     private bookS: BooksService,
-    private route: Router,
+    private auth: AuthService,
     private formBuilder: FormBuilder
   ) {
-    this.bookS.getGenres().subscribe(data => {
-      this.datasource = new MatTableDataSource(data);
-      this.length = data.length;
-      this.datasource.sort = this.sort;
-      this.datasource.paginator = this.paginator;
-    });
+  this.initForm();
   }
   initForm() {
     this.genreForm = this.formBuilder.group({
       name: ['', [Validators.required]],
       description: ['', [Validators.required]]
+    });
+    this.datasource = new MatTableDataSource(null);
+    this.bookS.getGenres().subscribe((data: any) => {
+      this.datasource = new MatTableDataSource(data);
+      this.length = data.length;
+      this.datasource.sort = this.sort;
+      this.datasource.paginator = this.paginator;
+    }, (error) => {
+      this.auth.checkAuthError(error);
     });
   }
   async onSubmit() {
@@ -41,15 +46,25 @@ export class GenreComponent implements OnInit {
       idGenre: '',
       name: this.genreForm.get('name').value,
       description: this.genreForm.get('description').value,
-      created: Date.now(),
-      enabled: true
+      enabled: 1
     };
-    await this.bookS.addGenre(this.Genre);
-    this.initForm();
+    await this.bookS.addGenre(this.Genre).subscribe(() => {
+      this.initForm();
+
+    }, (error) => {
+      this.auth.checkAuthError(error);
+    });
   }
-  async delete() {
-    await this.bookS.deleteGenre(this.Genre.idGenre);
-    this.route.navigate(['/genre']);
+  async delete(id) {
+    await this.bookS.deleteGenre(id).subscribe(() => {
+      this.initForm();
+    }, (error) => {
+      this.auth.checkAuthError(error);
+      if (error.status === 500) {
+        alert('You have to remove first the books from that type');
+      }
+    });
+
   }
   details(idGenre) {
     //

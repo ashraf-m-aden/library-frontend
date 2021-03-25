@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from '../services/notifications.service';
@@ -9,19 +10,20 @@ import { NotificationsService } from '../services/notifications.service';
 })
 export class HeaderComponent implements OnInit {
 matBadge = 0;
+isAuth = false;
   constructor(
     private notifS: NotificationsService,
-    private router: Router
+    private router: Router,
+    public auth: AuthService
   ) {
-    notifS.getAllNotifs().subscribe(data => {
-      this.matBadge = data.length;
-    });
-    if (this.router.url === '/') {
-      console.log('it\'s map');
-    } else {
-      console.log(this.router.url);
 
-    }
+    auth.isAuth.subscribe((auth: any)=>{
+      this.isAuth = auth;
+    });
+   }
+
+  logout(): void {
+    this.auth.logout();
   }
 
   ngOnInit(): void {

@@ -25,7 +25,7 @@ export class AllCDCComponent implements OnInit {
     private route: Router,
     private formBuilder: FormBuilder
   ) {
-    this.cdcS.getCdcs().subscribe(data => {
+    this.cdcS.getCdcs().subscribe((data:any) => {
       this.datasource = new MatTableDataSource(data);
       this.length = data.length;
       this.datasource.sort = this.sort;
@@ -52,7 +52,7 @@ export class AllCDCComponent implements OnInit {
     if (letter === '') {
       this.errorMessage = true;
     } else {
-      this.cdcS.getCdcs().subscribe(data => {
+      this.cdcS.getCdcs().subscribe((data:any) => {
         data.forEach(async cdc => {
           if (cdc.name.toLowerCase().includes(letter)) {
             await this.Cdcs.push(cdc);
