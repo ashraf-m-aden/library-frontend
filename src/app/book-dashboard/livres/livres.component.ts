@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, Input, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { MatSort, MatPaginator, MatTableDataSource } from '@angular/material';
 import { BooksService } from 'src/app/services/books.service';
 import { FormBuilder } from '@angular/forms';
@@ -11,30 +10,6 @@ import { FormBuilder } from '@angular/forms';
 })
 export class LivresComponent implements OnInit {
   @Input() genreId: number;
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    navText: ['precedent', 'suivant'],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 3
-      },
-      940: {
-        items: 4
-      }
-    },
-    nav: true
-  };
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns = ['title', 'author', 'year', 'Action'];

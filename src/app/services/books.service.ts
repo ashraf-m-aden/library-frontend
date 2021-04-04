@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
-import 'firebase/firestore';
-import 'firebase/storage';
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from '@angular/fire/firestore';
+
 import { Observable } from 'rxjs';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
@@ -14,9 +8,6 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class BooksService {
-  private bookCollection: AngularFirestoreCollection;
-  private genreCollection: AngularFirestoreCollection;
-  private pretCollection: AngularFirestoreCollection;
   book: Observable<any>;
   picId;
   options: {
@@ -29,12 +20,9 @@ export class BooksService {
   };
 
   constructor(
-    private afs: AngularFirestore,
-    private afStorage: AngularFireStorage,
     private http: HttpClient
   ) {
-    this.bookCollection = afs.collection('Books');
-    this.book = this.bookCollection.valueChanges();
+
   }
   getGenres() {
     return this.http.get(environment.apiUrl +'/genres');
@@ -70,7 +58,7 @@ export class BooksService {
 
   upload(event, id) {
     const path = `${id}`;
-    return this.afStorage.ref(path).put(event);
+
   }
   addBook(book, id) {
 
@@ -89,13 +77,7 @@ export class BooksService {
     //
     return this.http.get(environment.apiUrl + '/borrows');
   }
-  getOnePret(idPret) {
-    this.pretCollection = this.afs.collection('Prets', ref =>
-      ref.where('idPret', '==', idPret)
-    );
-    const pret = this.pretCollection.valueChanges();
-    return pret;
-  }
+
   rendu(pret) {
     return this.http.put(environment.apiUrl + '/borrows', pret);
 

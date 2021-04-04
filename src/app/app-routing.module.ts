@@ -1,6 +1,5 @@
 import { AuthGuardService } from './services/guards/auth-guard.service';
 import { LoginComponent } from './login/login.component';
-import { MapComponent } from './map/map.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { MessagesComponent } from './messages/messages/messages.component';
 import { SingleMessageComponent } from './messages/single-message/single-message.component';
@@ -27,9 +26,7 @@ export const routes: Routes = [
    {
     path: '*', redirectTo: '/dashboard', pathMatch: 'full'
   },
-  {
-    path: 'map', component: MapComponent, pathMatch: 'full', canActivate: [AuthGuardService]
-  },
+
   {
     path: 'dashboard', component: DashboardComponent, pathMatch: 'full'
   },
@@ -76,10 +73,7 @@ export const routes: Routes = [
   {
     path: 'login', component: LoginComponent, pathMatch: 'full', canActivate: [AuthGuardDeconnectedService]
   },
-  {
-    path: 'allCDC',
-    loadChildren: './gestion/gestion.module#GestionModule'
-  },
+
 ];
 
 export const components = [
@@ -87,7 +81,7 @@ export const components = [
   NotificationsComponent , GlobalStatsComponent, Dialog,   BorrowedBookComponent,
   BookDashboardComponent, SingleMessageComponent,
   BookComponent, HeaderComponent, BorrowBookComponent, MessagesComponent,
-  AddBookComponent, MapComponent, LoginComponent,
+  AddBookComponent, LoginComponent,
   LivresComponent
 ];
 @NgModule({

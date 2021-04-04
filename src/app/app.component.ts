@@ -14,11 +14,4 @@ export class AppComponent{
     //
     auth.Authenticated();
   }
-  isMap(): boolean {
-    if (this.router.url === '/' || this.router.url === '/map' ) {
-      return false;
-    } else {
-      return true;
-    }
-  }
 }
