@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BorrowBookComponent } from './borrow-book.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 describe('BorrowBookComponent', () => {
   let component: BorrowBookComponent;
@@ -8,7 +9,9 @@ describe('BorrowBookComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BorrowBookComponent ]
+      declarations: [ BorrowBookComponent ],
+      imports: [FormBuilder, FormGroup, Validators]
+
     })
     .compileComponents();
   }));

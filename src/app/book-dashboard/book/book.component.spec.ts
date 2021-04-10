@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BookComponent } from './book.component';
+import { ActivatedRoute } from '@angular/router';
 
 describe('BookComponent', () => {
   let component: BookComponent;
@@ -8,7 +9,8 @@ describe('BookComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BookComponent ]
+      declarations: [ BookComponent ],
+      imports: [ActivatedRoute]
     })
     .compileComponents();
   }));

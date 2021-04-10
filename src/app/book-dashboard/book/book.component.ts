@@ -1,7 +1,7 @@
 import { AuthService } from './../../services/auth.service';
 import { BooksService } from './../../services/books.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-book',
