@@ -74,8 +74,6 @@ export class AuthService {
       //then get the id of the user
 
       return this.http.get(environment.apiUrl + '/user', this.headers).subscribe(async (data: any) => {
-        console.log(data);
-
         await localStorage.setItem('id', data.id);
         await localStorage.setItem('username', data.username);
 
