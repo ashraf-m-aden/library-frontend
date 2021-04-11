@@ -31,11 +31,8 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-    - name: Docker Build and push
+    - name: Docker Build
       id: docker_build
-      uses: docker/build-push-action@v2
-      with:
-       push: true
-       tags: nejishow/library-frontend:latest
-    - name: Image digest
-      run: echo ${{ steps.docker_build.outputs.digest }}
+      run: docker image build -t nejishow/library .
+    - name: Docker push
+      run: docker image push nejishow/library
