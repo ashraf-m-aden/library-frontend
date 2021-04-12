@@ -37,5 +37,6 @@ jobs:
     - name: Docker push
       run: docker image push nejishow/library
     - name: Firebase GitHub Action
-      run: firebase init hosting:github
+      uses: FirebaseExtended/action-hosting-deploy@v0
+    - run: firebase init hosting:github
 
